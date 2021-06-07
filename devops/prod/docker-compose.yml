@@ -1,0 +1,15 @@
+version: "3.5"
+
+services:
+  api-keyad:
+    image: api-keyad:latest
+    container_name: api-keyad
+    build: 
+        context: ./../../api
+        dockerfile: ./devops/prod/dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=8001
+    ports:
+      - 8000:8001
+    env_file: "./../../api/devops/prod/.env"

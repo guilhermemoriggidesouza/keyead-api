@@ -1,0 +1,17 @@
+version: "3.5"
+
+services:
+  api-keyad:
+    image: api-keyad:latest
+    container_name: api-keyad
+    build: 
+        context: ./../../api
+        dockerfile: ./devops/local/dockerfile
+    environment:
+      - NODE_ENV=development
+      - PORT=8001
+    ports:
+      - 8001:8001
+    volumes:
+      - '../../api/src:/Keyad/api/src'
+    env_file: "../../api/devops/local/.env"
