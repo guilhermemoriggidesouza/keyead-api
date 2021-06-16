@@ -4,13 +4,13 @@ const Sequelize = require('sequelize');
 const config = require('../infra/config.js');
 
 const db = {};
-const sequelize = new Sequelize(config.db);
+const sequelize = new Sequelize(`postgres://${config.db.username}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}`);
 
 fs
   .readdirSync(__dirname)
   .filter(file => (file.indexOf('.') !== 0) && (file !== path.basename(__filename)) && (file.slice(-3) === '.js'))
-  .forEach((file) => {
-    const model = sequelize.import(path.join(__dirname, file));
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
 

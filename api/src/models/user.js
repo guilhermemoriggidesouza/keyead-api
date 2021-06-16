@@ -1,10 +1,59 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('Users', {
-      name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      category: DataTypes.CHAR(1)
-    });
-  
+    const User = sequelize.define('User', {
+        userId: {
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true,
+            type: DataTypes.INTEGER,
+        },
+        name: {
+            allowNull: false,
+            type: DataTypes.STRING,
+        },
+        socialReason: {
+            allowNull: false,
+            type: DataTypes.STRING,
+        },
+        cnpj: {
+            allowNull: false,
+            type: DataTypes.STRING,
+        },
+        telefone: {
+            allowNull: false,
+            type: DataTypes.STRING,
+        },
+        email: {
+            allowNull: false,
+            type: DataTypes.STRING,
+            unique: true,
+        },
+        password: {
+            allowNull: false,
+            type: DataTypes.STRING,
+        },
+        createdAt: {
+            allowNull: false,
+            type: DataTypes.DATE,
+        },
+        updatedAt: {
+            allowNull: false,
+            type: DataTypes.DATE,
+        },
+        category: {
+            allowNull: false,
+            type: DataTypes.CHAR(1),
+        },
+        companyId: {
+            allowNull: false,
+            type: DataTypes.INTEGER,
+        },
+    }, { freezeTableName: true});
+    
+    User.associate = (models)=>{
+        User.belongsTo(models.Company, { foreignKey: 'companyId' })
+    }
+
+    // User.sync({force: true});
+
     return User;
   }

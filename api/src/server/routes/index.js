@@ -1,4 +1,27 @@
+const { readdirSync } = require("fs");
+const { join: joinPath } = require("path");
 
-module.exports = () => {
+const setup = (api) => {
+    
+    const src = readdirSync(joinPath(__dirname), {
+      withFileTypes: false,
+    });
+    let paths = Object.values(src)
+      .filter((path)=>path.indexOf(".") == -1)
+    paths.forEach((path)=>{
+        const methods = readdirSync(joinPath(__dirname, path), {
+            withFileTypes: false,
+        });
+        methods.forEach((method)=>{
+            let routs = require(`./${path}/${method}`)
+            routs.forEach((rout)=>{
+                api[method.split(".")[0]](`/${path}/${rout.name}`, (rq,rs)=>rout.handler(rq,rs))
+                console.log(`[route]instaced - ${method.split(".")[0]}: /${path}/${rout.name}`)
+            })
+        })
+    })
 
-}
+    return api;
+};
+  
+module.exports = setup;

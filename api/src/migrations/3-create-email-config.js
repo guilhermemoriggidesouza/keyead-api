@@ -2,25 +2,32 @@
 
 module.exports = {
     up: (queryInterface, DataTypes) => {
-      return queryInterface.createTable('Users', {
-        id: {
+      return queryInterface.createTable('EmailConfig', {
+        emailConfigId: {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
           type: DataTypes.INTEGER,
         },
-        name: {
-          allowNull: false,
-          type: DataTypes.STRING,
-        },
         email: {
           allowNull: false,
           type: DataTypes.STRING,
-          unique: true,
         },
         password: {
           allowNull: false,
           type: DataTypes.STRING,
+        },
+        service: {
+          allowNull: false,
+          type: DataTypes.STRING,
+        },
+        port: {
+          allowNull: false,
+          type: DataTypes.STRING,
+        },
+        secure: {
+          allowNull: false,
+          type: DataTypes.BOOLEAN,
         },
         createdAt: {
           allowNull: false,
@@ -30,15 +37,19 @@ module.exports = {
           allowNull: false,
           type: DataTypes.DATE,
         },
-        category: {
+        companyId: {
           allowNull: false,
-          type: DataTypes.CHAR(1),
+          type: DataTypes.INTEGER,
+          references: {
+            key: "companyId",
+            model: "Company",
+          },
         },
-      });
+      }, { freezeTableName: true});
     },
   
     down: (queryInterface) => {
-      return queryInterface.dropTable('Users');
+      return queryInterface.dropTable('EmailConfig');
     }
   };
   

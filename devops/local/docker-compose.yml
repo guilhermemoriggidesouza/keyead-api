@@ -1,17 +1,53 @@
 version: "3.5"
 
+networks:
+    qyon_crm_local_network:
+      external:
+        name: keyad_db
+
 services:
-  api-keyad:
-    image: api-keyad:latest
-    container_name: api-keyad
-    build: 
-        context: ./../../api
-        dockerfile: ./devops/local/dockerfile
-    environment:
-      - NODE_ENV=development
-      - PORT=8001
-    ports:
-      - 8001:8001
-    volumes:
-      - '../../api/src:/Keyad/api/src'
-    env_file: "../../api/devops/local/.env"
+    api-keyad:
+        image: api-keyad:latest
+        container_name: api-keyad
+        networks:
+            qyon_crm_local_network:
+              aliases:
+                - api-keyad
+        build: 
+            context: ./../../api
+            dockerfile: ./devops/local/dockerfile
+        environment:
+        - NODE_ENV=development
+        - PORT=8001
+        ports:
+        - 8001:8001
+        volumes:
+        - '../../api/src:/Keyad/api/src'
+        env_file: "../../api/devops/local/.env"
+    db:
+        container_name: pg_container
+        networks:
+            qyon_crm_local_network:
+              aliases:
+                - db
+        image: postgres
+        restart: always
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+            POSTGRES_DB: keyad_db
+        ports:
+            - "5432:5432"
+    pgadmin:
+        container_name: pgadmin4_container
+        networks:
+            qyon_crm_local_network:
+              aliases:
+                - sgbd
+        image: dpage/pgadmin4
+        restart: always
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@admin.com
+            PGADMIN_DEFAULT_PASSWORD: root
+        ports:
+            - "5050:80"
