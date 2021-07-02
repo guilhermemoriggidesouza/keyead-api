@@ -4,7 +4,7 @@ const sendEmail = () =>{
 
 }
 
-const getEmailConfigByCompany = ({ companyId }) => {
+const getEmailConfigByCompany = async ({ companyId }) => {
     try{
         return await model.EmailConfig.findAll({
             limit: 1,
@@ -14,11 +14,11 @@ const getEmailConfigByCompany = ({ companyId }) => {
             order: [ [ 'createdAt', 'DESC' ]]
         })
     } catch (e){
-        console.log("[service] error on get email info", e, {name, email, logo})
+        console.log("[service] error on get email info", e, {companyId})
     }
 }
 
-const createEmailConfig = ({
+const createEmailConfig = async ({
     email,
     password,
     service,
@@ -36,7 +36,14 @@ const createEmailConfig = ({
             companyId
         })
     } catch (e){
-        console.log("[service] error on create email config", e, { name, socialReason, cnpj, telefone, email, password, category, companyId })
+        console.log("[service] error on create email config", e, { 
+            email,
+            password,
+            service,
+            port,
+            secure,
+            companyId
+        })
     }
 }
 

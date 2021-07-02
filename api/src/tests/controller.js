@@ -1,5 +1,5 @@
-const { validateLoginHandler, infoUserHandler, createUser } = require("../server/controller/userController")
-
+const { validateLoginHandler, infoUserHandler, createUser } = require("../server/controller/user-controller")
+const { v4: uuidv4 } = require("uuid")
 const mockResponse = () => {
     const res = {};
     res.status = jest.fn().mockReturnValue(res);
@@ -16,7 +16,7 @@ describe("[controller] tests userController", ()=>{
                 socialReason: "Moriggi", 
                 cnpj: "53141522820", 
                 telefone: "19984548889", 
-                email: "Guilherme Moriggi de Souza", 
+                email: uuidv4()+"@gmail.com", 
                 password: "teste123", 
                 category: "A", 
                 companyId: 1 
@@ -41,33 +41,36 @@ describe("[controller] tests userController", ()=>{
         );
     });
     
-    // test('[controller] validate login of client', async () => {
-    //     const createdCompany = await validateLoginHandler({ body: { tenant:"keyad", password: "123", }}, mockResponse())
-    //     console.log()
-    //     expect(createdCompany.dataValues).toEqual(
-    //         // {
-    //         //     companyId: expect.any(Number),
-    //         //     name: expect.any(String),
-    //         //     email: expect.any(String),
-    //         //     logo: null,
-    //         //     updatedAt: expect.any(Date),
-    //         //     createdAt: expect.any(Date)
-    //         // }
-    //     );
-    // });
+    test('[controller] validate login of client', async () => {
+        const res = mockResponse()
+        let req = {
+            body: { 
+                email: "GuilhermeMoriggi@Souza.com",
+                password: "teste123",
+                companyId: 1 
+            }
+        }
+
+        await validateLoginHandler(req, res)
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toBeDefined();
+        expect(res.json.length).toBeGreaterThan(0)
+    });
     
     
-    // test('[controller] get info user', async () => {
-    //     const createdCompany = await createCompany({name: "qyon", email: "qyon@qyon.com", logo: null})
-    //     expect(createdCompany.dataValues).toEqual(
-    //         {
-    //             companyId: expect.any(Number),
-    //             name: expect.any(String),
-    //             email: expect.any(String),
-    //             logo: null,
-    //             updatedAt: expect.any(Date),
-    //             createdAt: expect.any(Date)
-    //         }
-    //     );
-    // });
+    test('[controller] get info user', async () => {
+        const res = mockResponse()
+        let req = {
+            params: { 
+                companyId: 1 
+            }
+        }
+
+        await infoUserHandler(req, res)
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toBeDefined();
+        expect(res.json.length).toBeGreaterThan(0)
+    });
 })

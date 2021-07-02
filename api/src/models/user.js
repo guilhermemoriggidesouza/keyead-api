@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
         },
         name: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.STRING,
         },
         socialReason: {
@@ -19,13 +19,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         },
         telefone: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.STRING,
         },
         email: {
             allowNull: false,
             type: DataTypes.STRING,
-            unique: true,
+            unique: true
         },
         password: {
             allowNull: false,
@@ -52,8 +52,6 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = (models)=>{
         User.belongsTo(models.Company, { foreignKey: 'companyId' })
     }
-
-    // User.sync({force: true});
 
     return User;
   }

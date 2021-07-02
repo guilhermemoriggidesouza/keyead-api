@@ -17,19 +17,29 @@ const createUser = async ({name, socialReason, cnpj, telefone, email, password, 
     }
 }
 
-const getUser = ({ companyId, email, userId }) => {
+const getUser = async ({ companyId, email, userId }) => {
     try{
-        return await model.EmailConfig.findAll({
-            limit: email || userId ? 1 : null,
-            where: {
-              companyId,
-              email,
-              userId
-            },
-            order: [ [ 'createdAt', 'DESC' ]]
+        let limit = null
+        const where = {
+            companyId
+        }
+        if(email)
+            where.email = email
+
+        if(userId)
+            where.userId = userId
+
+        if(email || userId)
+            limit = 1
+        
+        return await model.User.findAll({
+            limit,
+            where,
+            order: [[ 'createdAt', 'DESC' ]]
         })
     } catch (e){
-        console.log("[service] error on getting User by email", e, { name, socialReason, cnpj, telefone, email, password, category, companyId })
+        
+        console.log("[service] error on getting User ", e, { companyId, email, userId })
     }
 }
 

@@ -1,4 +1,4 @@
-const { validateLoginHandler, infoUserHandler } = require("../../controller/userController")
+const { validateLoginHandler, infoUserHandler } = require("../../controller/user-controller")
 
 module.exports = [
     { 

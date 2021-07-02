@@ -7,9 +7,30 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             type: DataTypes.INTEGER,
         },
-        name: DataTypes.STRING,
-        email: DataTypes.STRING,
-        logo: DataTypes.STRING,
+        name: {
+            allowNull: false,
+            type: DataTypes.STRING,
+        },
+        email: {
+            allowNull: true,
+            type: DataTypes.STRING,
+        },
+        logo: {
+            allowNull: true,
+            type: DataTypes.STRING,
+        },
+        alias: {
+            allowNull: false,
+            type: DataTypes.STRING,
+        },
+        createdAt: {
+            allowNull: false,
+            type: DataTypes.DATE,
+        },
+        updatedAt: {
+            allowNull: false,
+            type: DataTypes.DATE,
+        },
     }, { freezeTableName: true});
     
     Company.associate = (models)=>{
