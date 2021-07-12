@@ -4,14 +4,6 @@ const { createUser, getUser } = require("../service/user");
 const { v4: uuidv4 } = require("uuid")
 const testRequest = uuidv4()
 
-describe("CLEANING DATABASE", ()=>{
-    const model = require("../models")
-    
-    model.User.sync({ force: true });
-    model.Company.sync({ force: true });
-    model.EmailConfig.sync({ force: true });
-})
-
 describe("[service] tests companyService", () => {
     
     test('[companyService] create new company', async () => {

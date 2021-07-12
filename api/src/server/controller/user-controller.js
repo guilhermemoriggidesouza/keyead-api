@@ -1,7 +1,7 @@
 const userService = require("../../service/user")
 const companyService = require("../../service/company")
-var crypto = require('crypto');
 const hex = require('amrhextotext')
+const config = require("../../infra/config")
 
 const validateLoginHandler = async (req, res) => {
     try{
@@ -23,14 +23,18 @@ const validateLoginHandler = async (req, res) => {
             res.status(400).json({error: "Senha incorreta"})
             return
         }
-
+        const token = jwt.sign(
+            user,
+            config.jwt.privateKey
+        );
+        user.token = token
         res.status(200).json(user)
     } catch (error) {
         console.log("[controller] error on validate login", error, req.body)
     }
 } 
 
-const infoUserHandler = async (req, res) => {
+const getUsersHandler = async (req, res) => {
     try{
         const { companyId } = req.params
         const users = await userService.getUser({
@@ -49,7 +53,7 @@ const infoUserHandler = async (req, res) => {
     }
 }
 
-const createUser = async (req, res) => {
+const createUserHandler = async (req, res) => {
     try{
         const { name, email, category, companyId, socialReason, cnpj, telefone } = req.body
         let { password } = req.body
@@ -59,6 +63,7 @@ const createUser = async (req, res) => {
             res.status(400).json({})
             return
         }
+        //TODO associate course to user
         res.status(200).json(customerInserted.dataValues)
     } catch (error) {
         console.log("[controller] error on create user", error, req.body)
@@ -66,8 +71,23 @@ const createUser = async (req, res) => {
 
 }
 
+const updateUserHandler = () => {
+
+}
+
+const deleteUserHandler = () => {
+    
+}
+
+const getUserByIdHandler = () => {
+
+}
+
 module.exports = {
     validateLoginHandler,
-    infoUserHandler,
-    createUser
+    getUsersHandler,
+    createUserHandler,
+    updateUserHandler,
+    deleteUserHandler,
+    getUserByIdHandler,
 }

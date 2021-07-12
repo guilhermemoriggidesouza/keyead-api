@@ -1,12 +1,15 @@
-const { validateLoginHandler, infoUserHandler } = require("../../controller/user-controller")
+const { validateLoginHandler, getUsersHandler } = require("../../controller/user-controller")
+const auth = require("../../middleware/auth")
 
 module.exports = [
     { 
         name: "validateLogin/",
-        handler: validateLoginHandler
+        handler: validateLoginHandler,
+        auth: null,
     },
     { 
-        name: "infoUser/:id",
-        handler: infoUserHandler
+        name: "getUsers/",
+        handler: getUsersHandler,
+        auth,
     }
 ]

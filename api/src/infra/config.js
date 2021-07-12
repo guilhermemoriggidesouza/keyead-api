@@ -8,5 +8,8 @@ module.exports = {
         host: process.env.HOST_DB || '',
         port: process.env.PORT_DB || '',
         dialect: 'postgres',
-    } 
+    } ,
+    jwt: {
+        privateKey: process.env.JWT_PRIVATE_KEY
+    }
 }
