@@ -1,34 +1,37 @@
 const userService = require("../../service/user")
 const companyService = require("../../service/company")
 const hex = require('amrhextotext')
+const jwt = require('jsonwebtoken')
 const config = require("../../infra/config")
 
 const validateLoginHandler = async (req, res) => {
     try{
         const { alias, email, password } = req.body
-        const company = companyService.getCompanyByAlias({ alias })
+
+        const company = await companyService.getCompanyByAlias({ alias })
         
         if(!company){
             res.status(400).json({error: "Não foi possível encontrar sua empresa"})
-            return
+            return "empresa errada"
         }
 
         const user = await userService.getUser({ companyId: company.companyId, email })
         if(!user){
             res.status(400).json({error: "Não foi possível encontrar seu login"})
-            return
+            return "login errado"
         }
-
         if(user.password != hex.textToHex(password)){
             res.status(400).json({error: "Senha incorreta"})
-            return
+            return "senha errada"
         }
         const token = jwt.sign(
             user,
             config.jwt.privateKey
         );
         user.token = token
+        console.log(user)
         res.status(200).json(user)
+        return token
     } catch (error) {
         console.log("[controller] error on validate login", error, req.body)
     }
@@ -36,7 +39,7 @@ const validateLoginHandler = async (req, res) => {
 
 const getUsersHandler = async (req, res) => {
     try{
-        const { companyId } = req.params
+        const { companyId } = req.user
         const users = await userService.getUser({
             companyId
         })
@@ -55,8 +58,10 @@ const getUsersHandler = async (req, res) => {
 
 const createUserHandler = async (req, res) => {
     try{
-        const { name, email, category, companyId, socialReason, cnpj, telefone } = req.body
+        const { name, email, category, socialReason, cnpj, telefone } = req.body
+        const { companyId } = req.user
         let { password } = req.body
+
         password = hex.textToHex(password);
         let customerInserted = await userService.createUser({name, socialReason, cnpj, telefone, email, password, category, companyId})
         if(!customerInserted.dataValues){

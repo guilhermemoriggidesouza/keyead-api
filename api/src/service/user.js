@@ -20,9 +20,16 @@ const createUser = async ({name, socialReason, cnpj, telefone, email, password, 
 const getUser = async ({ companyId, email, userId }) => {
     try{
         let limit = null
-        const where = {
-            companyId
+        let where = null
+
+        if(companyId){
+            where = {
+                companyId
+            }
+        }else{
+            return []
         }
+        
         if(email)
             where.email = email
 

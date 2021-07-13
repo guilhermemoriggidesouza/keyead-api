@@ -1,35 +1,23 @@
 const { createCompany, getCompanyByAlias } = require("../service/company");
 const { createEmailConfig, getEmailConfigByCompany } = require("../service/email");
 const { createUser, getUser } = require("../service/user");
-const { v4: uuidv4 } = require("uuid")
-const testRequest = uuidv4()
+const model = require("../models")
+
+describe("clearDatabase", ()=>{
+    test('clean database', async ()=>{
+        await model.Company.sync({ force: true });
+        await model.User.sync({ force: true });
+        await model.EmailConfig.sync({ force: true });
+    })
+})
 
 describe("[service] tests companyService", () => {
-    
+
     test('[companyService] create new company', async () => {
         const createdCompany = await createCompany({ alias: "qyon", name: "qyon", email: "qyon@qyon.com", logo: null })
         
         expect(createdCompany.dataValues).toBeDefined();
-        expect(createdCompany.dataValues).toEqual(
-            {
-                companyId: expect.any(Number),
-                name: expect.any(String),
-                alias: expect.any(String),
-                email: expect.any(String),
-                logo: null,
-                updatedAt: expect.any(Date),
-                createdAt: expect.any(Date)
-            }
-            );
-        });
-    })
-
-    test('[companyService] get company by alias', async () => {
-        const company = await getCompanyByAlias({
-            alias: "qyon",
-        })
-        expect(company).toBeDefined();
-        expect(company.length).toEqual({
+        expect(createdCompany.dataValues).toEqual({
             companyId: expect.any(Number),
             name: expect.any(String),
             alias: expect.any(String),
@@ -40,6 +28,23 @@ describe("[service] tests companyService", () => {
         });
     })
 
+    test('[companyService] get company by alias', async () => {
+        const company = await getCompanyByAlias({
+            alias: "qyon",
+        })
+        expect(company).toBeDefined();
+        expect(company).toEqual({
+            companyId: expect.any(Number),
+            name: expect.any(String),
+            alias: expect.any(String),
+            email: expect.any(String),
+            logo: null,
+            updatedAt: expect.any(Date),
+            createdAt: expect.any(Date)
+        });
+    })
+})
+
 describe("[service] tests userService", () => {
 
     test('[userService] create new user', async () => {
@@ -48,7 +53,7 @@ describe("[service] tests userService", () => {
             socialReason: "Moriggi",
             cnpj: "53141522820",
             telefone: "19984548889",
-            email: testRequest+"@Souza.com",
+            email: "GuilhermeMoriggi@Souza.com",
             password: "teste123",
             category: "A",
             companyId: 1
@@ -73,9 +78,12 @@ describe("[service] tests userService", () => {
     });
 
     test('[userService] getting user by email', async () => {
+        const company = await getCompanyByAlias({
+            alias: "qyon",
+        })
         const user = await getUser({
-            email: testRequest+"@Souza.com",
-            companyId: 1
+            email: "GuilhermeMoriggi@Souza.com",
+            companyId: company.companyId
         })
         expect(user).toBeDefined();
         expect(user.length).toBeGreaterThan(0);
@@ -91,9 +99,16 @@ describe("[service] tests userService", () => {
     });
 
     test('[userService] getting user by id', async () => {
+        const company = await getCompanyByAlias({
+            alias: "qyon",
+        })
+        const { userId } = await getUser({
+            email: "GuilhermeMoriggi@Souza.com",
+            companyId: company.companyId
+        })
         const user = await getUser({
-            userId: 5,
-            companyId: 1
+            userId: userId,
+            companyId: company.companyId
         })
         expect(user).toBeDefined();
         expect(user.length).toBeGreaterThan(0);
