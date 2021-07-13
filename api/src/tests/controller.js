@@ -1,4 +1,4 @@
-const { validateLoginHandler, infoUserHandler, createUser } = require("../server/controller/user-controller")
+const { validateLoginHandler, getUsersHandler, createUserHandler } = require("../server/controller/user-controller")
 const { v4: uuidv4 } = require("uuid")
 const mockResponse = () => {
     const res = {};
@@ -22,7 +22,7 @@ describe("[controller] tests userController", ()=>{
                 companyId: 1 
             }
         }
-        await createUser(req, res)
+        await createUserHandler(req, res)
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith(
             {
@@ -67,7 +67,7 @@ describe("[controller] tests userController", ()=>{
             }
         }
 
-        await infoUserHandler(req, res)
+        await getUsersHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
