@@ -6,8 +6,7 @@ const setup = (api) => {
     const src = readdirSync(joinPath(__dirname), {
       withFileTypes: false,
     });
-    let paths = Object.values(src)
-      .filter((path)=>path.indexOf(".") == -1)
+    let paths = Object.values(src).filter((path)=>path.indexOf(".") == -1)
     paths.forEach((path)=>{
         const methods = readdirSync(joinPath(__dirname, path), {
             withFileTypes: false,

@@ -8,7 +8,7 @@ module.exports = [
         auth: null,
     },
     { 
-        name: "getUsers/",
+        name: "getUser/:userId",
         handler: getUsersHandler,
         auth,
     }

@@ -11,7 +11,7 @@ const getEmailConfigByCompany = async ({ companyId }) => {
             where: {
               companyId
             },
-            order: [ [ 'createdAt', 'DESC' ]]
+            order: [[ 'createdAt', 'DESC' ]]
         })
     } catch (e){
         console.log("[service] error on get email info", e, {companyId})
