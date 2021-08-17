@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             type: DataTypes.STRING,
         },
+        category: {
+            allowNull: false,
+            type: DataTypes.CHAR(1),
+        },
         createdAt: {
             allowNull: false,
             type: DataTypes.DATE,
@@ -38,10 +42,6 @@ module.exports = (sequelize, DataTypes) => {
         updatedAt: {
             allowNull: false,
             type: DataTypes.DATE,
-        },
-        category: {
-            allowNull: false,
-            type: DataTypes.CHAR(1),
         },
         companyId: {
             allowNull: false,
@@ -51,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     
     User.associate = (models)=>{
         User.belongsTo(models.Company, { foreignKey: 'companyId' })
+        User.belongsToMany(models.Course, { through: 'UserCourse', foreignKey: "userId" })
     }
 
     return User;

@@ -1,7 +1,5 @@
-const {  validateLoginHandler, getUsersHandler, createUserHandler, updateUserHandler, deleteUserHandler, } = require("../src/server/controller/user-controller")
-const userRepository = require("../src/repository/user");
-const companyRepository = require("../src/repository/company");
-
+const { getCategoryHandler, createCategoryHandler, updateCategoryHandler, deleteCategoryHandler, } = require("../src/server/controller/category-controller")
+const categoryRepository = require("../src/repository/user");
 const hex = require('amrhextotext')
 
 const mockResponse = () => {
@@ -10,8 +8,15 @@ const mockResponse = () => {
     res.json = jest.fn().mockReturnValue(res);
     return res;
 };
-let token = ""
 let mock = {
+    CATEGORY: {
+        categoryId: 1,
+        description: "teste",
+        active: true,
+        createdAt: "2021-08-11 21:28:00.000",
+        updatedAt: "2021-08-11 21:28:00.000",
+        companyId: 1,
+    },
     USER : {
         userId: 1,
         name: "Guilherme",
@@ -34,102 +39,73 @@ let mock = {
     }
 }
 
-describe("[controller] tests userController", ()=> {
+describe("[controller] tests Category Controller", ()=> {
     let res;
     beforeEach(() => {
         res = mockResponse()
     })
 
-    test('[controller] validate login of client', async () => {
-        let req = {
-            user: mock.USER,
-            body: { 
-                email: "GuilhermeMoriggi@Souza.com",
-                password: "teste123",
-                alias: "qyon" 
-            }
-        }
-
-        const getCompanyByAlias = jest.spyOn(companyRepository, 'getOne');
-        const getUser = jest.spyOn(userRepository, 'getOne');
-        
-        getCompanyByAlias.mockReturnValue(mock.COMPANY);
-        getUser.mockReturnValue(mock.USER);
-        
-        token = await validateLoginHandler(req, res)
-        
-        expect(token).not.toEqual("senha errada")
-        expect(token).not.toEqual("login errado")
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toBeDefined();
-    });
-    
-    test('[controller] create new user', async () => {
+    test('[controller] create new category', async () => {
         let req = {
             header: (_) => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
             user: mock.USER,
             body: { 
-                name: "Guilherme", 
-                socialReason: "Moriggi", 
-                cnpj: "53141522820", 
-                telefone: "19984548889", 
-                email: "GuilhermeMoriggi@gmail.com", 
-                password: "teste123", 
-                category: "A", 
+                description: "Guilherme", 
+                active: true, 
+                companyId: 1, 
             }
         }
 
-        const createdUser = jest.spyOn(userRepository, 'create');
-        createdUser.mockReturnValue({ dataValues: mock.USER });
+        const createdCategory = jest.spyOn(categoryRepository, 'create');
+        createdCategory.mockReturnValue({ dataValues: mock.CATEGORY });
         
-        await createUserHandler(req, res)
+        await createCategoryHandler(req, res)
         
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith(mock.USER);
+        expect(res.json).toHaveBeenCalledWith(mock.CATEGORY);
     });
         
         
-    test('[controller] get user by UserId', async () => {
+    test('[controller] get user by CategoryId', async () => {
         let req = {
             user: mock.USER,
             params: {
-                userId: mock.USER.userId
+                categoryId: mock.CATEGORY.categoryId
             },
             header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
         
-        const user = jest.spyOn(userRepository, 'getAll');
-        user.mockReturnValue(mock.USER);
+        const user = jest.spyOn(categoryRepository, 'getAll');
+        user.mockReturnValue(mock.CATEGORY);
 
-        await getUsersHandler(req, res)
+        await getCategoryHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith(mock.USER)
+        expect(res.json).toHaveBeenCalledWith(mock.CATEGORY)
     });
 
-    test('[controller] get users', async () => {
+    test('[controller] get category', async () => {
         let req = {
             user: mock.USER,
             header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
         
-        const user = jest.spyOn(userRepository, 'getAll');
-        user.mockReturnValue([ mock.USER, mock.USER ]);
+        const user = jest.spyOn(categoryRepository, 'getAll');
+        user.mockReturnValue([ mock.CATEGORY, mock.CATEGORY ]);
 
-        await getUsersHandler(req, res)
+        await getCategorysHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith([ mock.USER, mock.USER ])
-        expect(res.json).toHaveBeenCalledWith([ mock.USER, mock.USER ])
+        expect(res.json).toHaveBeenCalledWith([ mock.CATEGORY, mock.CATEGORY ])
     });
     
-    test('[controller] update user', async () => {
+    test('[controller] update category', async () => {
         let req = {
             user: mock.USER,
             body: {
-                userId: mock.USER.userId,
+                categoryId: mock.CATEGORY.categoryId,
                 newFields: {
                     name: "moriggi"
                 }
@@ -137,29 +113,29 @@ describe("[controller] tests userController", ()=> {
             header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
         
-        const updatedUser = jest.spyOn(userRepository, 'update');
-        updatedUser.mockReturnValue([ 1 ]);
+        const updatedCategory = jest.spyOn(categoryRepository, 'update');
+        updatedCategory.mockReturnValue([ 1 ]);
     
-        await updateUserHandler(req, res)
+        await updateCategoryHandler(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
         expect(res.json).toHaveBeenCalledWith({updated: 1})
     })
     
-    test('[controller] delete user', async () => {
+    test('[controller] delete category', async () => {
         let req = {
             user: mock.USER,
             params: {
-                userId: mock.USER.userId
+                categoryId: mock.CATEGORY.categoryId
             },
             header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
         
-        const removedUser = jest.spyOn(userRepository, 'delete');
-        removedUser.mockReturnValue([ 1 ]);
+        const removedCategory = jest.spyOn(categoryRepository, 'delete');
+        removedCategory.mockReturnValue([ 1 ]);
     
-        await deleteUserHandler(req, res)
+        await deleteCategoryHandler(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();

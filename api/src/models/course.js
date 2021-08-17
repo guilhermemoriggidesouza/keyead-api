@@ -1,30 +1,35 @@
 module.exports = (sequelize, DataTypes) => {
-    const EmailConfig = sequelize.define('EmailConfig', {
-        emailConfigId: {
+    const Course = sequelize.define('Course', {
+        courseId: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
             type: DataTypes.INTEGER,
         },
-        email: {
+        photoLink: {
+            allowNull: true,
+            type: DataTypes.STRING,
+        },
+        name: {
             allowNull: false,
             type: DataTypes.STRING,
         },
-        password: {
+        description: {
             allowNull: false,
             type: DataTypes.STRING,
         },
-        service: {
+        categoryId: {
             allowNull: false,
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
         },
-        port: {
-            allowNull: false,
-            type: DataTypes.STRING,
-        },
-        secure: {
+        status: {
             allowNull: false,
             type: DataTypes.BOOLEAN,
+        },
+        certificated: {
+            allowNull: true,
+            type: DataTypes.BOOLEAN,
+            unique: true
         },
         createdAt: {
             allowNull: false,
@@ -37,16 +42,14 @@ module.exports = (sequelize, DataTypes) => {
         companyId: {
             allowNull: false,
             type: DataTypes.INTEGER,
-            references: {
-                key: "companyId",
-                model: "Company",
-            },
         },
-    }, { freezeTableName: true });
-
-    EmailConfig.associate = (models) => {
-        EmailConfig.belongsTo(models.Company, { foreignKey: 'companyId' })
+    }, { freezeTableName: true});
+    
+    Course.associate = (models)=>{
+        Course.belongsTo(models.Company, { foreignKey: 'companyId' })
+        Course.belongsToMany(models.Category, { through: "CategoryCourse" })
+        Course.belongsToMany(models.User, { through: 'UserCourse', foreignKey: "courseId" })
     }
 
-    return EmailConfig;
+    return Course;
 }

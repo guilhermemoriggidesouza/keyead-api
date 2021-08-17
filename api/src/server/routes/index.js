@@ -19,7 +19,7 @@ const setup = (api) => {
                 } else {
                     api[method.split(".")[0]](`/${path}/${rout.name}`, (rq,rs)=>rout.handler(rq,rs))
                 }
-                console.log(`[route]instaced - ${method.split(".")[0]}: /${path}/${rout.name}`)
+                console.log(`[route]instaced - ${method.split(".")[0]}: /${path}${rout.name}`)
             })
         })
     })

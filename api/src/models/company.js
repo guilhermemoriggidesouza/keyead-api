@@ -35,9 +35,9 @@ module.exports = (sequelize, DataTypes) => {
     
     Company.associate = (models)=>{
         Company.hasMany(models.User, { foreignKey: 'companyId' })
+        Company.hasMany(models.Course, { foreignKey: 'companyId' })
+        Company.hasMany(models.Category, { foreignKey: 'companyId' })
     }
-
-    // Company.sync({force: true});
 
     return Company;
 }

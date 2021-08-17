@@ -18,9 +18,10 @@
     "pg": "^8.6.0",
     "sequelize": "^6.6.2",
     "uuid": "^8.3.2"
-  },
-  "devDependencies": {
+},
+"devDependencies": {
     "jest": "^27.0.4",
+    "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.14.12",
     "sequelize-cli": "^6.2.0"
   }

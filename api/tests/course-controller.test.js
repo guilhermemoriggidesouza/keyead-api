@@ -12,6 +12,9 @@ const mockResponse = () => {
 };
 let token = ""
 let mock = {
+    COURSE: {
+
+    },
     USER : {
         userId: 1,
         name: "Guilherme",
@@ -163,6 +166,6 @@ describe("[controller] tests userController", ()=> {
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({removed: 1})
+        expect(res.json).toHaveBeenCalledWith({removedUser: 1})
     })
 })
