@@ -22,7 +22,8 @@ const createCourseHandler = async (req, res) => {
         categoryList.forEach(categoryId => {
             categoryCourseRepository.create({
                 categoryId,
-                courseId: createdCourse.courseId
+                courseId: createdCourse.courseId,
+                companyId
             })
         })
 
@@ -38,17 +39,17 @@ const deleteCourseHandler = async (req, res) => {
         const { courseId } = req.params
         const { companyId } = req.user
  
-        const removedUser = await courseRepository.delete({
+        const removedCourse = await courseRepository.delete({
             where: {
                 courseId,
                 companyId
             }
         })
         
-        if(!removedUser[0]){
+        if(!removedCourse[0]){
             res.status(400).json({})
         }
-        res.status(200).json({ removedUser: removedUser[0] })
+        res.status(200).json({ removed: removedCourse[0] })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on delete Course", error, req.body)
@@ -60,18 +61,18 @@ const updateCourseHandler = async (req, res) =>{
         const { courseId, newFields } = req.body
         const { companyId } = req.user
 
-        const updatedCategory = await courseRepository.update(newFields, {
+        const updatedCourse = await courseRepository.update(newFields, {
             where: {
                 companyId,
                 courseId
             }
         })
         
-        if(!updatedCategory[0]){
+        if(!updatedCourse[0]){
             res.status(400).json({})
         }
         
-        res.status(200).json({ updated: updatedCategory[0]})
+        res.status(200).json({ updated: updatedCourse[0]})
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on update course", error, req.body)

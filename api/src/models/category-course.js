@@ -1,16 +1,16 @@
 module.exports = (sequelize, DataTypes) => {
-    const UserCourse = sequelize.define('UserCourse', {
-        userCourseId: {
+    const CategoryCourse = sequelize.define('CategoryCourse', {
+        categoryCourseID: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
             type: DataTypes.INTEGER,
         },
-        companyId: {
+        courseId: {
             allowNull: false,
             type: DataTypes.INTEGER,
         },
-        courseId: {
+        categoryId: {
             allowNull: false,
             type: DataTypes.INTEGER,
         },
@@ -22,15 +22,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             type: DataTypes.DATE,
         },
-        userId: {
-            allowNull: false,
-            type: DataTypes.INTEGER,
+        companyId: {
+          allowNull: false,
+          type: DataTypes.INTEGER,
         },
     }, { freezeTableName: true});
     
-    UserCourse.associate = (models)=>{
-        UserCourse.belongsTo(models.Company, { foreignKey: 'companyId' })
+    CategoryCourse.associate = (models)=>{
+        CategoryCourse.belongsTo(models.Company, { foreignKey: 'companyId' })
     }
 
-    return UserCourse;
+    return CategoryCourse;
 }

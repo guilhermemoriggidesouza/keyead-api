@@ -1,5 +1,5 @@
 const { getCategoryHandler, createCategoryHandler, updateCategoryHandler, deleteCategoryHandler, } = require("../src/server/controller/category-controller")
-const categoryRepository = require("../src/repository/user");
+const categoryRepository = require("../src/repository/category");
 const hex = require('amrhextotext')
 
 const mockResponse = () => {
@@ -94,7 +94,7 @@ describe("[controller] tests Category Controller", ()=> {
         const user = jest.spyOn(categoryRepository, 'getAll');
         user.mockReturnValue([ mock.CATEGORY, mock.CATEGORY ]);
 
-        await getCategorysHandler(req, res)
+        await getCategoryHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();

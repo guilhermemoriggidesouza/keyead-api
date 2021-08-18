@@ -23,7 +23,7 @@ const deleteCategoryHandler = async (req, res) => {
         const { categoryId } = req.params
         const { companyId } = req.user
  
-        const removedUser = await userRepository.delete({
+        const removedUser = await categoryRepository.delete({
             where: {
                 categoryId,
                 companyId

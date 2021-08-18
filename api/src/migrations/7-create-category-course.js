@@ -2,8 +2,8 @@
 
 module.exports = {
     up: (queryInterface, DataTypes) => {
-      return queryInterface.createTable('UserCourse', {
-        userCourseId: {
+      return queryInterface.createTable('CategoryCourse', {
+        categoryCourseID: {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
@@ -17,12 +17,12 @@ module.exports = {
                 model: "Course",
             },
         },
-        userId: {
+        categoryId: {
             allowNull: false,
             type: DataTypes.INTEGER,
             references: {
-                key: "userId",
-                model: "User",
+                key: "categoryId",
+                model: "Category",
             },
         },
         createdAt: {
@@ -45,7 +45,7 @@ module.exports = {
     },
   
     down: (queryInterface) => {
-      return queryInterface.dropTable('UserCourse');
+      return queryInterface.dropTable('CategoryCourse');
     }
   };
   
