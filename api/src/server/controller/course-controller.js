@@ -3,7 +3,7 @@ const categoryCourseRepository = require("../../repository/category-course")
 
 const createCourseHandler = async (req, res) => {
     try{
-        const { name, description, active, certificated, listCategory } = req.body
+        const { name, description, photoLink, active, certificated, listCategory } = req.body
         const { companyId } = req.user
 
         const createdCourse = await courseRepository.create({
@@ -11,7 +11,8 @@ const createCourseHandler = async (req, res) => {
             description,
             active,
             certificated,
-            companyId
+            companyId,
+            photoLink
         })
 
         if(!createdCourse){

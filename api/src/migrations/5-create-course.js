@@ -21,7 +21,7 @@ module.exports = {
             allowNull: false,
             type: DataTypes.STRING,
         },
-        status: {
+        active: {
             allowNull: false,
             type: DataTypes.BOOLEAN,
         },
