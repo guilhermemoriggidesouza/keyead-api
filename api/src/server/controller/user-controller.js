@@ -40,6 +40,7 @@ const validateLoginHandler = async (req, res) => {
         res.status(200).json(user)
         return token
     } catch (error) {
+        res.status(500).json(error)
         console.log("[controller] error on validate login", error, req.body)
     }
 } 
@@ -51,13 +52,13 @@ const getUsersHandler = async (req, res) => {
         const where = {
             companyId,
         }
-
+        
         if(req.params) where.userId = req.params.userId
         const users = userRepository.getAll({
             limit: where.userId ? 1 : 0,
             where
         })
-
+        
         if(!users){
             res.status(400).json([])
             return
@@ -68,6 +69,7 @@ const getUsersHandler = async (req, res) => {
         }
         res.status(200).json(response)
     } catch (error) {
+        res.status(500).json(error)
         console.log("[controller] error on get users", error, req.body)
     }
 }
