@@ -19,7 +19,7 @@ module.exports = {
     },
     async create(params){
         try {
-            
+            return await model.Company.create(params)
         } catch (error) {
             console.log("", { params, error})
         }

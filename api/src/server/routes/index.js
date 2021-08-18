@@ -15,9 +15,9 @@ const setup = (api) => {
             let routs = require(`./${path}/${method}`)
             routs.forEach((rout)=>{
                 if(rout.auth) {
-                    api[method.split(".")[0]](`/${path}/${rout.name}`, rout.auth, (rq,rs)=>rout.handler(rq,rs))
+                    api[method.split(".")[0]](`/${path}${rout.name}`, rout.auth, (rq,rs)=>rout.handler(rq,rs))
                 } else {
-                    api[method.split(".")[0]](`/${path}/${rout.name}`, (rq,rs)=>rout.handler(rq,rs))
+                    api[method.split(".")[0]](`/${path}${rout.name}`, (rq,rs)=>rout.handler(rq,rs))
                 }
                 console.log(`[route]instaced - ${method.split(".")[0]}: /${path}${rout.name}`)
             })
