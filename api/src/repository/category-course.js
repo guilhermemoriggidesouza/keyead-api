@@ -3,7 +3,7 @@ const model = require("../models")
 module.exports = {
     async getOne(params){
         try {
-            return await model.CategoryCourse.findOne(params)  
+            return (await model.CategoryCourse.findOne(params)).dataValues  
         } catch (error) {
             console.log("[Repository][CategoryCourse] error on get one CategoryCourse", { params, error})
             throw Error(error)
@@ -20,7 +20,7 @@ module.exports = {
     },
     async create(params){
         try {
-            model.CategoryCourse.create(params)
+            return (await model.CategoryCourse.create(params)).dataValues
         } catch (error) {
             console.log("[Repository][CategoryCourse] error on create CategoryCourse", { params, error})
             throw Error(error)
@@ -28,7 +28,7 @@ module.exports = {
     },
     async delete(params){
         try {
-            model.CategoryCourse.destroy(params)
+           return await model.CategoryCourse.destroy(params)
         } catch (error) {
             console.log("[Repository][CategoryCourse] error on delete CategoryCourse", { params, error})     
             throw Error(error)

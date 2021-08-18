@@ -80,7 +80,7 @@ describe("[controller] tests userController", ()=> {
         }
 
         const createdUser = jest.spyOn(userRepository, 'create');
-        createdUser.mockReturnValue({ dataValues: mock.USER });
+        createdUser.mockReturnValue(mock.USER);
         
         await createUserHandler(req, res)
         

@@ -3,7 +3,7 @@ const model = require("../models")
 module.exports = {
     async getOne(params){
         try {
-            return await model.User.findOne(params)  
+            return (await model.User.findOne(params)).dataValues   
         } catch (error) {
             console.log("[Repository][User] error on get one User", { params, error})
             throw Error(error)
@@ -20,7 +20,7 @@ module.exports = {
     },
     async create(params){
         try {
-            model.User.create(params)
+            return (await model.User.create(params)).dataValues
         } catch (error) {
             console.log("[Repository][User] error on create User", { params, error})
             throw Error(error)
@@ -28,7 +28,7 @@ module.exports = {
     },
     async delete(params){
         try {
-            model.User.destroy(params)
+            return await model.User.destroy(params)
         } catch (error) {
             console.log("[Repository][User] error on delete User", { params, error})     
             throw Error(error)
@@ -36,7 +36,7 @@ module.exports = {
     },
     async update(values, options){
         try {
-            model.User.update(values, options)
+            return await model.User.update(values, options)
         } catch (error) {
             console.log("[Repository][User] error on update User", { params, error})        
             throw Error(error)

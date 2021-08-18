@@ -57,7 +57,7 @@ describe("[controller] tests Category Controller", ()=> {
         }
 
         const createdCategory = jest.spyOn(categoryRepository, 'create');
-        createdCategory.mockReturnValue({ dataValues: mock.CATEGORY });
+        createdCategory.mockReturnValue(mock.CATEGORY);
         
         await createCategoryHandler(req, res)
         

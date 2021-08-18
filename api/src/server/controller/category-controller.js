@@ -11,7 +11,7 @@ const createCategoryHandler = async (req, res) => {
             companyId
         })
 
-        res.status(200).json(createdCategory.dataValues)
+        res.status(200).json(createdCategory)
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on create Category", error, req.body)

@@ -75,8 +75,8 @@ describe("[controller] tests course controller", ()=> {
         const createCourse = jest.spyOn(courseRepository, 'create');
         const createCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
 
-        createCourse.mockReturnValue({ dataValues: mock.COURSE });
-        createCategoryCourse.mockReturnValue({ dataValues: mock.CATEGORY_COURSE });
+        createCourse.mockReturnValue(mock.COURSE);
+        createCategoryCourse.mockReturnValue(mock.CATEGORY_COURSE);
         
         await createCourseHandler(req, res)
         

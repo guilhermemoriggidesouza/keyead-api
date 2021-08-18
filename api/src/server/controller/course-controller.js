@@ -27,7 +27,7 @@ const createCourseHandler = async (req, res) => {
             })
         })
 
-        res.status(200).json(createdCourse.dataValues)
+        res.status(200).json(createdCourse)
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on create Course", error, req.body)

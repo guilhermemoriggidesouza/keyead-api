@@ -91,11 +91,11 @@ const createUserHandler = async (req, res) => {
             category,
             companyId,
         })
-        if(!customerInserted.dataValues){
+        if(!customerInserted){
             res.status(400).json({})
             return
         }
-        res.status(200).json(customerInserted.dataValues)
+        res.status(200).json(customerInserted)
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on create user", error, req.body)

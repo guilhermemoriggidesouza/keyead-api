@@ -11,11 +11,11 @@ const createCompanyHandler = async (req, res) => {
             email,
         })
 
-        if(!companyInserted.dataValues){
+        if(!companyInserted){
             res.status(400).json({})
             return
         }
-        res.status(200).json(companyInserted.dataValues)
+        res.status(200).json(companyInserted)
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on create company", error, req.body)
