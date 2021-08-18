@@ -3,7 +3,8 @@ const model = require("../models")
 module.exports = {
     async getOne(params){
         try {
-            return (await model.Company.findOne(params)).dataValues   
+            let company = await model.Company.findOne(params)
+            return company ? company.dataValues : {}
         } catch (error) {
             console.log("[Repository][User] error on get one Company", { params, error})
             throw Error(error)
@@ -19,7 +20,8 @@ module.exports = {
     },
     async create(params){
         try {
-            return (await model.Company.create(params)).dataValues
+            let company = await model.Company.create(params)
+            return company ? company.dataValues : {}
         } catch (error) {
             console.log("", { params, error})
         }

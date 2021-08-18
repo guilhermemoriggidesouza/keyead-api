@@ -3,7 +3,8 @@ const model = require("../models")
 module.exports = {
     async getOne(params){
         try {
-            return (await model.UserCourse.findOne(params)).dataValues  
+           let userCourse = await model.UserCourse.findOne(params)
+           return userCourse ? userCourse.dataValues : {}
         } catch (error) {
             console.log("[Repository][UserCourse] error on get one UserCourse", { params, error})
             throw Error(error)
@@ -20,7 +21,8 @@ module.exports = {
     },
     async create(params){
         try {
-            return (await model.UserCourse.create(params)).dataValues
+            let userCourse = await model.UserCourse.create(params)
+            return userCourse ? userCourse.dataValues : {}
         } catch (error) {
             console.log("[Repository][UserCourse] error on create UserCourse", { params, error})
             throw Error(error)
