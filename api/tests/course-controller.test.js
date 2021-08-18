@@ -26,7 +26,7 @@ let mock = {
         description: "teste de curso", 
         active: true, 
         certificated: true, 
-        categoryList: [1, 2, 3],
+        listCategory: [1, 2, 3],
         companyId: 1,
         createdAt: "2021-08-11 21:28:00.000",
         updateAt: "2021-08-11 21:28:00.000"
@@ -68,7 +68,7 @@ describe("[controller] tests course controller", ()=> {
                 description: "teste de curso", 
                 active: true, 
                 certificated: true, 
-                categoryList: [1, 2, 3]
+                listCategory: [1, 2, 3]
             }
         }
 
