@@ -3,7 +3,7 @@ const auth = require("../../middleware/auth")
 
 module.exports = [
     { 
-        name: "auth/",
+        name: "/auth",
         handler: validateLoginHandler,
         auth: null,
     },
