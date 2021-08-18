@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const config = require("./../../infra/config")
 const userRepository = require("./../../repository/user");
 const companyRepository = require("./../../repository/company");
+const userCourseRepository = require("../../repository/user-course")
 
 const validateLoginHandler = async (req, res) => {
     try{
@@ -76,12 +77,12 @@ const getUsersHandler = async (req, res) => {
 
 const createUserHandler = async (req, res) => {
     try{
-        const { name, email, category, socialReason, cnpj, telefone } = req.body
+        const { name, email, category, socialReason, cnpj, telefone, listCourses } = req.body
         const { companyId } = req.user
         let { password } = req.body
 
         password = hex.textToHex(password);
-        let customerInserted = await userRepository.create({
+        let userInserted = await userRepository.create({
             name,
             socialReason,
             cnpj,
@@ -91,11 +92,22 @@ const createUserHandler = async (req, res) => {
             category,
             companyId,
         })
-        if(!customerInserted){
+        if(!userInserted){
             res.status(400).json({})
             return
         }
-        res.status(200).json(customerInserted)
+
+        if(listCourses){
+            listCourses.forEach(courseId => {
+                userCourseRepository.create({
+                    courseId,
+                    companyId,
+                    userId: userInserted.userId
+                })
+            });
+        }
+
+        res.status(200).json(userInserted)
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on create user", error, req.body)
