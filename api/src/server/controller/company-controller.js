@@ -1,34 +1,24 @@
-const hex = require('amrhextotext')
-const jwt = require('jsonwebtoken');
-const config = require("../../infra/config")
-const userRepository = require("../../repository/user");
-const companyRepository = require("../../repository/company");
+const companyRepository = require("../../repository/company")
 
 const createCompanyHandler = async (req, res) => {
     try{
-        const { name, email, category, socialReason, cnpj, telefone } = req.body
-        const { companyId } = req.user
-        let { password } = req.body
+        const { name, email, alias, logo, } = req.body
 
-        password = hex.textToHex(password);
-        let customerInserted = await userRepository.create({
+        let companyInserted = await companyRepository.create({
             name,
-            socialReason,
-            cnpj,
-            telefone,
+            alias,
+            logo,
             email,
-            password,
-            category,
-            companyId,
         })
-        if(!customerInserted.dataValues){
+
+        if(!companyInserted.dataValues){
             res.status(400).json({})
             return
         }
-        res.status(200).json(customerInserted.dataValues)
+        res.status(200).json(companyInserted.dataValues)
     } catch (error) {
         res.status(500).json(error)
-        console.log("[controller] error on create user", error, req.body)
+        console.log("[controller] error on create company", error, req.body)
     }
 }
 
