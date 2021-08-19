@@ -89,7 +89,7 @@ const getCourseHandler = async (req, res) =>{
         }
 
         if(req.params.courseId) where.courseId = req.params.courseId
-        const courses = courseRepository.getAll({
+        const courses = await courseRepository.getAll({
             limit: where.coursesId ? 1 : undefined,
             where
         })
