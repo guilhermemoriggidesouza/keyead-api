@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --legacy-watch index.js",
     "test": "jest",
-    "examples-db": "node examples-db.js"
+    "examples": "node examples-db.js"
   },
   "author": "Guilherme moriggi",
   "license": "ISC",
