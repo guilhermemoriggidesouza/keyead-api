@@ -56,7 +56,7 @@ const getUsersHandler = async (req, res) => {
         
         if(req.params.userId) where.userId = req.params.userId
         const users = userRepository.getAll({
-            limit: where.userId ? 1 : 0,
+            limit: where.userId ? 1 : undefined,
             where
         })
         

@@ -28,7 +28,7 @@ const createCourseHandler = async (req, res) => {
             })
         })
 
-        res.status(200).json(createdCourse)
+        res.status(200).json({ success: true, ...createdCourse})
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on create Course", error, req.body)
@@ -50,7 +50,7 @@ const deleteCourseHandler = async (req, res) => {
         if(!removedCourse[0]){
             res.status(400).json({})
         }
-        res.status(200).json({ removed: removedCourse[0] })
+        res.status(200).json({ success: true, removed: removedCourse[0] })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on delete Course", error, req.body)
@@ -73,7 +73,7 @@ const updateCourseHandler = async (req, res) =>{
             res.status(400).json({})
         }
         
-        res.status(200).json({ updated: updatedCourse[0]})
+        res.status(200).json({ success: true, updated: updatedCourse[0]})
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on update course", error, req.body)
@@ -90,7 +90,7 @@ const getCourseHandler = async (req, res) =>{
 
         if(req.params.courseId) where.courseId = req.params.courseId
         const courses = courseRepository.getAll({
-            limit: where.coursesId ? 1 : 0,
+            limit: where.coursesId ? 1 : undefined,
             where
         })
 
@@ -102,7 +102,7 @@ const getCourseHandler = async (req, res) =>{
         if(response.length == 1 ){
             response = response[0];
         }
-        res.status(200).json(response)
+        res.status(200).json({ success: true, ...response })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on get Category", error, req.body)
