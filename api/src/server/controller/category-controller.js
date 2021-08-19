@@ -73,7 +73,7 @@ const getCategoryHandler = async (req, res) =>{
             companyId,
         }
 
-        if(req.params) where.categoryId = req.params.categoryId
+        if(req.params.categoryId) where.categoryId = req.params.categoryId
         const category = categoryRepository.getAll({
             limit: where.categoryId ? 1 : 0,
             where

@@ -88,7 +88,7 @@ const getCourseHandler = async (req, res) =>{
             companyId,
         }
 
-        if(req.params) where.courseId = req.params.courseId
+        if(req.params.courseId) where.courseId = req.params.courseId
         const courses = courseRepository.getAll({
             limit: where.coursesId ? 1 : 0,
             where

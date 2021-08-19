@@ -54,7 +54,7 @@ const getUsersHandler = async (req, res) => {
             companyId,
         }
         
-        if(req.params) where.userId = req.params.userId
+        if(req.params.userId) where.userId = req.params.userId
         const users = userRepository.getAll({
             limit: where.userId ? 1 : 0,
             where
