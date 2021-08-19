@@ -38,7 +38,7 @@ const validateLoginHandler = async (req, res) => {
             config.jwt.privateKey
         );
         user.token = token
-        res.status(200).json(user)
+        res.status(200).json({ success: true, data: user})
         return token
     } catch (error) {
         res.status(500).json(error)
@@ -68,7 +68,7 @@ const getUsersHandler = async (req, res) => {
         if(response.length == 1 ){
             response = response[0];
         }
-        res.status(200).json(response)
+        res.status(200).json({ success: true, data: response })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on get users", error, req.body)
@@ -107,7 +107,7 @@ const createUserHandler = async (req, res) => {
             });
         }
 
-        res.status(200).json(userInserted)
+        res.status(200).json({ success: true, data: userInserted })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on create user", error, req.body)
@@ -130,7 +130,7 @@ const updateUserHandler = async (req, res) => {
             res.status(400).json({})
         }
         
-        res.status(200).json({ updated: updatedUser[0]})
+        res.status(200).json({ success:true, updated: updatedUser[0]})
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on update user", error, req.body)
@@ -152,7 +152,7 @@ const deleteUserHandler = async (req, res) => {
         if(!removedUser[0]){
             res.status(400).json({})
         }
-        res.status(200).json({ removed: removedUser[0] })
+        res.status(200).json({ success:true, removed: removedUser[0] })
         
     } catch (error) {
         res.status(500).json(error)

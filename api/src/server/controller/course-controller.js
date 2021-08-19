@@ -28,7 +28,7 @@ const createCourseHandler = async (req, res) => {
             })
         })
 
-        res.status(200).json({ success: true, ...createdCourse})
+        res.status(200).json({ success: true, data: createdCourse || {}})
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on create Course", error, req.body)
@@ -102,7 +102,7 @@ const getCourseHandler = async (req, res) =>{
         if(response.length == 1 ){
             response = response[0];
         }
-        res.status(200).json({ success: true, ...response })
+        res.status(200).json({ success: true, data: response || [] })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on get Category", error, req.body)

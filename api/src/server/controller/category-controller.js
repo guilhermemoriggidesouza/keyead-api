@@ -11,7 +11,7 @@ const createCategoryHandler = async (req, res) => {
             companyId
         })
 
-        res.status(200).json(createdCategory)
+        res.status(200).json({success: true, data: createdCategory || {}})
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on create Category", error, req.body)
@@ -33,7 +33,7 @@ const deleteCategoryHandler = async (req, res) => {
         if(!removedUser[0]){
             res.status(400).json({})
         }
-        res.status(200).json({ removed: removedUser[0] })
+        res.status(200).json({ success: true, removed: removedUser[0] })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on delete Category", error, req.body)
@@ -57,7 +57,7 @@ const updateCategoryHandler = async (req, res) =>{
             res.status(400).json({})
         }
         
-        res.status(200).json({ updated: updatedCategory[0]})
+        res.status(200).json({ success: true, updated: updatedCategory[0]})
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on update Category", error, req.body)
@@ -87,7 +87,7 @@ const getCategoryHandler = async (req, res) =>{
         if(response.length == 1 ){
             response = response[0];
         }
-        res.status(200).json(response)
+        res.status(200).json({success: true, data: response || []})
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on get Category", error, req.body)
