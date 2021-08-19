@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
         certificated: {
             allowNull: true,
             type: DataTypes.BOOLEAN,
-            unique: true
         },
         createdAt: {
             allowNull: false,

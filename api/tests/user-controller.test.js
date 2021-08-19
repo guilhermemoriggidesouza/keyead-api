@@ -80,7 +80,7 @@ describe("[controller] tests userController", ()=> {
         }
 
         const createdUser = jest.spyOn(userRepository, 'create');
-        createdUser.mockReturnValue(mock.USER);
+        createdUser.mockReturnValue(new Promise((resolve, error) => resolve(mock.USER)));
         
         await createUserHandler(req, res)
         
@@ -99,7 +99,7 @@ describe("[controller] tests userController", ()=> {
         }
         
         const user = jest.spyOn(userRepository, 'getAll');
-        user.mockReturnValue(mock.USER);
+        user.mockReturnValue(new Promise((resolve, error) => resolve(mock.USER)));
 
         await getUsersHandler(req, res)
 
@@ -115,7 +115,7 @@ describe("[controller] tests userController", ()=> {
         }
         
         const user = jest.spyOn(userRepository, 'getAll');
-        user.mockReturnValue([ mock.USER, mock.USER ]);
+        user.mockReturnValue(new Promise((resolve, error) => resolve([ mock.USER, mock.USER ])));
 
         await getUsersHandler(req, res)
 
@@ -138,7 +138,7 @@ describe("[controller] tests userController", ()=> {
         }
         
         const updatedUser = jest.spyOn(userRepository, 'update');
-        updatedUser.mockReturnValue([ 1 ]);
+        updatedUser.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
     
         await updateUserHandler(req, res)
     
@@ -157,12 +157,12 @@ describe("[controller] tests userController", ()=> {
         }
         
         const removedUser = jest.spyOn(userRepository, 'delete');
-        removedUser.mockReturnValue([ 1 ]);
+        removedUser.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
     
         await deleteUserHandler(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({removed: 1})
+        expect(res.json).toHaveBeenCalledWith({success: true, removed: 1})
     })
 })

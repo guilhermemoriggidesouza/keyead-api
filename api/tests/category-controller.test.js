@@ -57,12 +57,12 @@ describe("[controller] tests Category Controller", ()=> {
         }
 
         const createdCategory = jest.spyOn(categoryRepository, 'create');
-        createdCategory.mockReturnValue(mock.CATEGORY);
+        createdCategory.mockReturnValue(new Promise((resolve, error) => resolve(mock.CATEGORY)));
         
         await createCategoryHandler(req, res)
         
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith(mock.CATEGORY);
+        expect(res.json).toHaveBeenCalledWith({success:true, data: mock.CATEGORY});
     });
         
         
@@ -76,13 +76,13 @@ describe("[controller] tests Category Controller", ()=> {
         }
         
         const user = jest.spyOn(categoryRepository, 'getAll');
-        user.mockReturnValue(mock.CATEGORY);
+        user.mockReturnValue(new Promise((resolve, error) => resolve(mock.CATEGORY)));
 
         await getCategoryHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith(mock.CATEGORY)
+        expect(res.json).toHaveBeenCalledWith({success: true, data: mock.CATEGORY})
     });
 
     test('[controller] get category', async () => {
@@ -92,13 +92,13 @@ describe("[controller] tests Category Controller", ()=> {
         }
         
         const user = jest.spyOn(categoryRepository, 'getAll');
-        user.mockReturnValue([ mock.CATEGORY, mock.CATEGORY ]);
+        user.mockReturnValue(new Promise((resolve, error) => resolve([ mock.CATEGORY, mock.CATEGORY ])));
 
         await getCategoryHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith([ mock.CATEGORY, mock.CATEGORY ])
+        expect(res.json).toHaveBeenCalledWith({success: true, data: [ mock.CATEGORY, mock.CATEGORY ]})
     });
     
     test('[controller] update category', async () => {
@@ -114,13 +114,13 @@ describe("[controller] tests Category Controller", ()=> {
         }
         
         const updatedCategory = jest.spyOn(categoryRepository, 'update');
-        updatedCategory.mockReturnValue([ 1 ]);
+        updatedCategory.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
     
         await updateCategoryHandler(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({updated: 1})
+        expect(res.json).toHaveBeenCalledWith({success: true, updated: 1})
     })
     
     test('[controller] delete category', async () => {
@@ -133,12 +133,12 @@ describe("[controller] tests Category Controller", ()=> {
         }
         
         const removedCategory = jest.spyOn(categoryRepository, 'delete');
-        removedCategory.mockReturnValue([ 1 ]);
+        removedCategory.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
     
         await deleteCategoryHandler(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({removed: 1})
+        expect(res.json).toHaveBeenCalledWith({success: true, removed: 1})
     })
 })

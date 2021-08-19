@@ -75,13 +75,13 @@ describe("[controller] tests course controller", ()=> {
         const createCourse = jest.spyOn(courseRepository, 'create');
         const createCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
 
-        createCourse.mockReturnValue(mock.COURSE);
-        createCategoryCourse.mockReturnValue(mock.CATEGORY_COURSE);
+        createCourse.mockReturnValue(new Promise((resolve, error) => resolve(mock.COURSE)));
+        createCategoryCourse.mockReturnValue(new Promise((resolve, error) => resolve(mock.CATEGORY_COURSE)));
         
         await createCourseHandler(req, res)
         
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith(mock.COURSE);
+        expect(res.json).toHaveBeenCalledWith({success: true, data: mock.COURSE});
     });
         
         
@@ -95,13 +95,13 @@ describe("[controller] tests course controller", ()=> {
         }
         
         const user = jest.spyOn(courseRepository, 'getAll');
-        user.mockReturnValue(mock.COURSE);
+        user.mockReturnValue(new Promise((resolve, error) => resolve(mock.COURSE)));
 
         await getCourseHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith(mock.COURSE)
+        expect(res.json).toHaveBeenCalledWith({success: true, data: mock.COURSE})
     });
 
     test('[controller] get users', async () => {
@@ -111,13 +111,13 @@ describe("[controller] tests course controller", ()=> {
         }
         
         const user = jest.spyOn(courseRepository, 'getAll');
-        user.mockReturnValue([ mock.COURSE, mock.COURSE ]);
+        user.mockReturnValue(new Promise((resolve, error) => resolve([ mock.COURSE, mock.COURSE ])));
 
         await getCourseHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith([ mock.COURSE, mock.COURSE ])
+        expect(res.json).toHaveBeenCalledWith({success: true, data: [ mock.COURSE, mock.COURSE ]})
     });
     
     test('[controller] update user', async () => {
@@ -133,13 +133,13 @@ describe("[controller] tests course controller", ()=> {
         }
         
         const updateCcourse = jest.spyOn(courseRepository, 'update');
-        updateCcourse.mockReturnValue([ 1 ]);
+        updateCcourse.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
     
         await updateCourseHandler(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({updated: 1})
+        expect(res.json).toHaveBeenCalledWith({success:true, updated: 1})
     })
     
     test('[controller] delete user', async () => {
@@ -152,12 +152,12 @@ describe("[controller] tests course controller", ()=> {
         }
         
         const removeCcourse = jest.spyOn(courseRepository, 'delete');
-        removeCcourse.mockReturnValue([ 1 ]);
+        removeCcourse.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
     
         await deleteCourseHandler(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({removed: 1})
+        expect(res.json).toHaveBeenCalledWith({success: true, removed: 1})
     })
 })

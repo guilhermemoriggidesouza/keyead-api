@@ -28,7 +28,6 @@ module.exports = {
         certificated: {
             allowNull: true,
             type: DataTypes.BOOLEAN,
-            unique: true
         },
         createdAt: {
           allowNull: false,
