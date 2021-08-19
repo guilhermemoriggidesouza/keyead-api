@@ -1,4 +1,5 @@
 const categoryRepository = require("../../repository/category")
+const courseRepository = require("../../repository/course")
 
 const createCategoryHandler = async (req, res) => {
     try{
@@ -71,6 +72,11 @@ const getCategoryHandler = async (req, res) =>{
         let response
         const where = {
             companyId,
+            include: [
+                {
+                    model: courseRepository.model
+                }
+            ]
         }
 
         if(req.params.categoryId) where.categoryId = req.params.categoryId

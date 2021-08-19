@@ -36,4 +36,5 @@ module.exports = {
             throw Error(error)
         }
     },
+    model: model.CategoryCourse
 }

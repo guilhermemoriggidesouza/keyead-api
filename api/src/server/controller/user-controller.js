@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const config = require("./../../infra/config")
 const userRepository = require("./../../repository/user");
 const companyRepository = require("./../../repository/company");
-const userCourseRepository = require("../../repository/user-course")
+const userCourseRepository = require("../../repository/user-course");
+const courseRepository = require('../../repository/course');
 
 const validateLoginHandler = async (req, res) => {
     try{
@@ -52,10 +53,15 @@ const getUsersHandler = async (req, res) => {
         let response
         const where = {
             companyId,
+            include: [
+                {
+                    model: courseRepository.model
+                }
+            ]
         }
         
         if(req.params.userId) where.userId = req.params.userId
-        const users = userRepository.getAll({
+        const users = await userRepository.getAll({
             limit: where.userId ? 1 : undefined,
             where
         })

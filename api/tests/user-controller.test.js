@@ -53,8 +53,8 @@ describe("[controller] tests userController", ()=> {
         const getCompanyByAlias = jest.spyOn(companyRepository, 'getOne');
         const getUser = jest.spyOn(userRepository, 'getOne');
         
-        getCompanyByAlias.mockReturnValue(mock.COMPANY);
-        getUser.mockReturnValue(mock.USER);
+        getCompanyByAlias.mockReturnValue(new Promise((resolve, error) => resolve(mock.COMPANY)));
+        getUser.mockReturnValue(new Promise((resolve, error) => resolve(mock.USER)));
         
         token = await validateLoginHandler(req, res)
         
@@ -85,7 +85,7 @@ describe("[controller] tests userController", ()=> {
         await createUserHandler(req, res)
         
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith(mock.USER);
+        expect(res.json).toHaveBeenCalledWith({ success: true, data: mock.USER });
     });
         
         
@@ -105,12 +105,13 @@ describe("[controller] tests userController", ()=> {
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith(mock.USER)
+        expect(res.json).toHaveBeenCalledWith({ success: true, data: mock.USER })
     });
 
     test('[controller] get users', async () => {
         let req = {
             user: mock.USER,
+            params : {},
             header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
         
@@ -121,8 +122,7 @@ describe("[controller] tests userController", ()=> {
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith([ mock.USER, mock.USER ])
-        expect(res.json).toHaveBeenCalledWith([ mock.USER, mock.USER ])
+        expect(res.json).toHaveBeenCalledWith({ success: true, data: [ mock.USER, mock.USER ] })
     });
     
     test('[controller] update user', async () => {
@@ -144,7 +144,7 @@ describe("[controller] tests userController", ()=> {
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({updated: 1})
+        expect(res.json).toHaveBeenCalledWith({ success: true, updated: 1 })
     })
     
     test('[controller] delete user', async () => {
@@ -163,6 +163,6 @@ describe("[controller] tests userController", ()=> {
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({success: true, removed: 1})
+        expect(res.json).toHaveBeenCalledWith({ success: true, removed: 1 })
     })
 })

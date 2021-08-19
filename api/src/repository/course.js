@@ -44,4 +44,5 @@ module.exports = {
             throw Error(error)
         }
     },
+    model: model.Course
 }

@@ -40,4 +40,5 @@ module.exports = {
             console.log("", { params, error})            
         }
     },
+    model: model.Company
 }
