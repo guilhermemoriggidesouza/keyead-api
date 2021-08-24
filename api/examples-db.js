@@ -2,7 +2,7 @@ const categoryRepository = require("./src/repository/category");
 const courseRepository = require("./src/repository/course");
 const companyRepository = require("./src/repository/company");
 const userRepository = require("./src/repository/user");
-
+const hex = require('amrhextotext')
 
 companyRepository.create({
     name: "local",
@@ -17,7 +17,7 @@ userRepository.create({
     cnpj: "53141522820", 
     telefone: "19984548889", 
     email: "GuilhermeMoriggi@gmail.com", 
-    password: "teste123", 
+    password: hex.textToHex("teste123"), 
     category: "A", 
     companyId: 1, 
 })
