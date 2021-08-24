@@ -77,12 +77,7 @@ const getCategoryHandler = async (req, res) =>{
         if(req.params.categoryId) where.categoryId = req.params.categoryId
         const category = await categoryRepository.getAll({
             limit: where.categoryId ? 1 : undefined,
-            where,
-            include: [
-                {
-                    model: courseRepository.model
-                }
-            ]
+            where
         })
 
         if(!category){
