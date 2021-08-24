@@ -1,4 +1,4 @@
-const { getCategoryHandler } = require("../../controller/category-controller")
+const { getCategoryHandler } = require("../../controller/category")
 const auth = require("../../middleware/auth")
 
 module.exports = [

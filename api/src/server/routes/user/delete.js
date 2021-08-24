@@ -1,4 +1,4 @@
-const { deleteUserHandler } = require("../../controller/user-controller")
+const { deleteUserHandler } = require("../../controller/user")
 const auth = require("../../middleware/auth")
 
 module.exports = [

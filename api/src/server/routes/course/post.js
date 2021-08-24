@@ -1,4 +1,4 @@
-const { createCourseHandler } = require("../../controller/course-controller")
+const { createCourseHandler } = require("../../controller/course")
 const auth = require("../../middleware/auth")
 
 module.exports = [

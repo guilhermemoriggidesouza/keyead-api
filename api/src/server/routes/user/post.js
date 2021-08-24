@@ -1,4 +1,4 @@
-const { createUserHandler, validateLoginHandler } = require("../../controller/user-controller")
+const { createUserHandler, validateLoginHandler } = require("../../controller/user")
 const auth = require("../../middleware/auth")
 
 module.exports = [

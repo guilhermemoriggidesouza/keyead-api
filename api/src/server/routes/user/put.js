@@ -1,4 +1,4 @@
-const { updateUserHandler } = require("../../controller/user-controller")
+const { updateUserHandler } = require("../../controller/user")
 const auth = require("../../middleware/auth")
 
 module.exports = [

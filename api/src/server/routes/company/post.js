@@ -1,4 +1,4 @@
-const { createCompanyHandler } = require("../../controller/company-controller")
+const { createCompanyHandler } = require("../../controller/company")
 
 module.exports = [
     { 

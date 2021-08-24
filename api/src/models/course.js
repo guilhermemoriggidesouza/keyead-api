@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             type: DataTypes.INTEGER,
         },
-        photoLink: {
+        photo: {
             allowNull: true,
             type: DataTypes.STRING,
         },
@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         Course.belongsTo(models.Company, { foreignKey: 'companyId' })
         Course.belongsToMany(models.Category, { through: "CategoryCourse", foreignKey: "courseId" })
         Course.belongsToMany(models.User, { through: 'UserCourse', foreignKey: "courseId" })
+        Course.hasMany(models.Modules, { foreignKey: "courseId" })
     }
 
     return Course;

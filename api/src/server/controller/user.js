@@ -1,8 +1,8 @@
 const hex = require('amrhextotext')
 const jwt = require('jsonwebtoken');
-const config = require("./../../infra/config")
-const userRepository = require("./../../repository/user");
-const companyRepository = require("./../../repository/company");
+const config = require("../../infra/config")
+const userRepository = require("../../repository/user");
+const companyRepository = require("../../repository/company");
 const userCourseRepository = require("../../repository/user-course");
 const courseRepository = require('../../repository/course');
 

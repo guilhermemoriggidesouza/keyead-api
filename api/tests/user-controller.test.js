@@ -1,4 +1,4 @@
-const {  validateLoginHandler, getUsersHandler, createUserHandler, updateUserHandler, deleteUserHandler, } = require("../src/server/controller/user-controller")
+const {  validateLoginHandler, getUsersHandler, createUserHandler, updateUserHandler, deleteUserHandler, } = require("../src/server/controller/user")
 const userRepository = require("../src/repository/user");
 const companyRepository = require("../src/repository/company");
 

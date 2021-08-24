@@ -1,4 +1,4 @@
-const { deleteCategoryHandler } = require("../../controller/category-controller")
+const { deleteCategoryHandler } = require("../../controller/category")
 const auth = require("../../middleware/auth")
 
 module.exports = [

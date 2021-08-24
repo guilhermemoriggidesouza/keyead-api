@@ -1,7 +1,6 @@
-const {  getCourseHandler, createCourseHandler, updateCourseHandler, deleteCourseHandler, } = require("../src/server/controller/course-controller")
+const {  getCourseHandler, createCourseHandler, updateCourseHandler, deleteCourseHandler, } = require("../src/server/controller/course")
 const courseRepository = require("../src/repository/course");
 const categoryCourseRepository = require("../src/repository/category-course")
-
 const hex = require('amrhextotext')
 
 const mockResponse = () => {

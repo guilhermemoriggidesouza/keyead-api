@@ -1,4 +1,4 @@
-const { getCategoryHandler, createCategoryHandler, updateCategoryHandler, deleteCategoryHandler, } = require("../src/server/controller/category-controller")
+const { getCategoryHandler, createCategoryHandler, updateCategoryHandler, deleteCategoryHandler, } = require("../src/server/controller/category")
 const categoryRepository = require("../src/repository/category");
 const hex = require('amrhextotext')
 
