@@ -50,7 +50,6 @@ const validateLoginHandler = async (req, res) => {
 const getUsersHandler = async (req, res) => {
     try{
         const { companyId } = req.user
-        let response
         const where = {
             companyId,
             include: [
@@ -70,11 +69,7 @@ const getUsersHandler = async (req, res) => {
             res.status(400).json([])
             return
         }
-        response = users
-        if(response.length == 1 ){
-            response = response[0];
-        }
-        res.status(200).json({ success: true, data: response })
+        res.status(200).json({ success: true, data: users })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on get users", error, req.body)

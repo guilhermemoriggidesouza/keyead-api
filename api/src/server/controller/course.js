@@ -84,7 +84,6 @@ const updateCourseHandler = async (req, res) =>{
 const getCourseHandler = async (req, res) =>{
     try{
         const { companyId } = req.user
-        let response
         const where = {
             companyId,
         }
@@ -104,11 +103,7 @@ const getCourseHandler = async (req, res) =>{
             res.status(400).json([])
             return
         }
-        response = courses
-        if(response.length == 1 ){
-            response = response[0];
-        }
-        res.status(200).json({ success: true, data: response || [] })
+        res.status(200).json({ success: true, data: courses })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on get Category", error, req.body)
