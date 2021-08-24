@@ -87,17 +87,17 @@ const getCourseHandler = async (req, res) =>{
         let response
         const where = {
             companyId,
-            include: [
-                {
-                    model: categoryRepository.model
-                }
-            ]
         }
 
         if(req.params.courseId) where.courseId = req.params.courseId
         const courses = await courseRepository.getAll({
             limit: where.coursesId ? 1 : undefined,
-            where
+            where,
+            include: [
+                {
+                    model: categoryRepository.model
+                }
+            ]
         })
 
         if(!courses){
