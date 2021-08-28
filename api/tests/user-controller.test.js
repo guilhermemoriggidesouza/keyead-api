@@ -1,43 +1,12 @@
 const {  validateLoginHandler, getUsersHandler, createUserHandler, updateUserHandler, deleteUserHandler, } = require("../src/server/controller/user")
 const userRepository = require("../src/repository/user");
 const companyRepository = require("../src/repository/company");
-
-const hex = require('amrhextotext')
-
-const mockResponse = () => {
-    const res = {};
-    res.status = jest.fn().mockReturnValue(res);
-    res.json = jest.fn().mockReturnValue(res);
-    return res;
-};
-let token = ""
-let mock = {
-    USER : {
-        userId: 1,
-        name: "Guilherme",
-        socialReason: "Moriggi",
-        cnpj: "53141522820",
-        telefone: "19984548889",
-        email: "GuilhermeMoriggi@Souza.com",
-        password: hex.textToHex("teste123"),
-        category: "A",
-        companyId: 1,
-        createdAt: "2021-08-11 21:28:00.000",
-        updateAt: "2021-08-11 21:28:00.000"
-    },
-    COMPANY : {
-        companyId: 1,
-        alias: "qyon", 
-        name: "qyon", 
-        email: "qyon@qyon.com", 
-        logo: null 
-    }
-}
+const mock = require("./mock")
 
 describe("[controller] tests userController", ()=> {
     let res;
     beforeEach(() => {
-        res = mockResponse()
+        res = mock.mockResponse()
     })
 
     test('[controller] validate login of client', async () => {

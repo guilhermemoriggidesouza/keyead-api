@@ -128,7 +128,7 @@ const updateUserHandler = async (req, res) => {
             }
         })
         
-        if(!updatedUser[0]){
+        if(updatedUser == 0){
             res.status(400).json({})
             return
         }
@@ -152,7 +152,7 @@ const deleteUserHandler = async (req, res) => {
             }
         })
         
-        if(!removedUser[0]){
+        if(removedUser == 0){
             res.status(400).json({})
         }
         res.status(200).json({ success:true, removed: removedUser[0] })

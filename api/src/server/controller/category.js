@@ -31,7 +31,7 @@ const deleteCategoryHandler = async (req, res) => {
             }
         })
         
-        if(!removedUser[0]){
+        if(removedUser == 0){
             res.status(400).json({})
             return
         }

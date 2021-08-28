@@ -48,7 +48,7 @@ const deleteCourseHandler = async (req, res) => {
             }
         })
         
-        if(!removedCourse[0]){
+        if(removedCourse == 0){
             res.status(400).json({})
             return
         }

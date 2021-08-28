@@ -1,48 +1,11 @@
 const { getCategoryHandler, createCategoryHandler, updateCategoryHandler, deleteCategoryHandler, } = require("../src/server/controller/category")
 const categoryRepository = require("../src/repository/category");
-const hex = require('amrhextotext')
-
-const mockResponse = () => {
-    const res = {};
-    res.status = jest.fn().mockReturnValue(res);
-    res.json = jest.fn().mockReturnValue(res);
-    return res;
-};
-let mock = {
-    CATEGORY: {
-        categoryId: 1,
-        description: "teste",
-        active: true,
-        createdAt: "2021-08-11 21:28:00.000",
-        updatedAt: "2021-08-11 21:28:00.000",
-        companyId: 1,
-    },
-    USER : {
-        userId: 1,
-        name: "Guilherme",
-        socialReason: "Moriggi",
-        cnpj: "53141522820",
-        telefone: "19984548889",
-        email: "GuilhermeMoriggi@Souza.com",
-        password: hex.textToHex("teste123"),
-        category: "A",
-        companyId: 1,
-        createdAt: "2021-08-11 21:28:00.000",
-        updateAt: "2021-08-11 21:28:00.000"
-    },
-    COMPANY : {
-        companyId: 1,
-        alias: "qyon", 
-        name: "qyon", 
-        email: "qyon@qyon.com", 
-        logo: null 
-    }
-}
+const mock = require("./mock")
 
 describe("[controller] tests Category Controller", ()=> {
     let res;
     beforeEach(() => {
-        res = mockResponse()
+        res = mock.mockResponse()
     })
 
     test('[controller] create new category', async () => {
