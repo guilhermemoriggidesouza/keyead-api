@@ -2,11 +2,11 @@ const courseRepository = require("../../repository/course")
 const categoryCourseRepository = require("../../repository/category-course")
 const categoryRepository = require("../../repository/category")
 
-const insertListCategoryInCourse = (listCategory) => {
+const insertListCategoryInCourse = (listCategory, courseId) => {
     listCategory.forEach(categoryId => {
         categoryCourseRepository.create({
             categoryId,
-            courseId: createdCourse.courseId,
+            courseId: courseId,
             companyId
         })
     })
@@ -31,7 +31,7 @@ const createCourseHandler = async (req, res) => {
             return
         }
         
-        insertListCategoryInCourse(listCategory)
+        insertListCategoryInCourse(listCategory, createdCourse.courseId)
 
         res.status(200).json({ success: true, data: createdCourse || {}})
     } catch (error) {
@@ -83,7 +83,7 @@ const updateCourseHandler = async (req, res) =>{
                     companyId
                 }
             })
-            insertListCategoryInCourse(newFields.listCategory)
+            insertListCategoryInCourse(newFields.listCategory, courseId)
         }
 
         const updatedCourse = await courseRepository.update(newFields, {
