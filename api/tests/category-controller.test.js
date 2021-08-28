@@ -29,7 +29,7 @@ describe("[controller] tests Category Controller", ()=> {
     });
         
         
-    test('[controller] get user by CategoryId', async () => {
+    test('[controller] get category by CategoryId', async () => {
         let req = {
             user: mock.USER,
             params: {

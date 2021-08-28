@@ -35,7 +35,7 @@ describe("[controller] tests course controller", ()=> {
     });
         
         
-    test('[controller] get user by courseCd', async () => {
+    test('[controller] get course by courseCd', async () => {
         let req = {
             user: mock.USER,
             params: {
@@ -54,7 +54,7 @@ describe("[controller] tests course controller", ()=> {
         expect(res.json).toHaveBeenCalledWith({success: true, data: mock.COURSE})
     });
 
-    test('[controller] get users', async () => {
+    test('[controller] get courses', async () => {
         let req = {
             user: mock.USER,
             params : {},
@@ -71,7 +71,7 @@ describe("[controller] tests course controller", ()=> {
         expect(res.json).toHaveBeenCalledWith({success: true, data: [ mock.COURSE, mock.COURSE ]})
     });
     
-    test('[controller] update user', async () => {
+    test('[controller] update course', async () => {
         let req = {
             user: mock.USER,
             params: {
@@ -95,7 +95,7 @@ describe("[controller] tests course controller", ()=> {
         expect(res.json).toHaveBeenCalledWith({success:true, updated: 1})
     })
     
-    test('[controller] delete user', async () => {
+    test('[controller] delete course', async () => {
         let req = {
             user: mock.USER,
             params: {

@@ -1,6 +1,5 @@
 const {  getModuleHandler, createModuleHandler, updateModuleHandler, deleteModuleHandler, } = require("../src/server/controller/module")
 const moduleRepository = require("../src/repository/module");
-const ModuleRepository = require("../src/repository/module")
 const mock = require("./mock")
 
 describe("[controller] tests module controller", ()=> {
@@ -30,26 +29,25 @@ describe("[controller] tests module controller", ()=> {
     });
         
         
-    test('[controller] get user by moduleId', async () => {
+    test('[controller] get modules by moduleId', async () => {
         let req = {
             user: mock.USER,
             params: {
-                userId: mock.USER.userId
+                userId: mock.MODULE.moduleId
             },
-            header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
         
         const user = jest.spyOn(moduleRepository, 'getAll');
-        user.mockReturnValue(new Promise((resolve, error) => resolve(mock.COURSE)));
+        user.mockReturnValue(new Promise((resolve, error) => resolve(mock.MODULE)));
 
         await getModuleHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({success: true, data: mock.COURSE})
+        expect(res.json).toHaveBeenCalledWith({success: true, data: mock.MODULE})
     });
 
-    test('[controller] get users', async () => {
+    test('[controller] get modules', async () => {
         let req = {
             user: mock.USER,
             params : {},
@@ -66,11 +64,11 @@ describe("[controller] tests module controller", ()=> {
         expect(res.json).toHaveBeenCalledWith({success: true, data: [ mock.COURSE, mock.COURSE ]})
     });
     
-    test('[controller] update user', async () => {
+    test('[controller] update module', async () => {
         let req = {
             user: mock.USER,
             params: {
-                moduleId: mock.COURSE.moduleId,
+                moduleId: mock.MODULE.moduleId,
             },
             body: {
                 newFields: {
@@ -90,11 +88,11 @@ describe("[controller] tests module controller", ()=> {
         expect(res.json).toHaveBeenCalledWith({success:true, updated: 1})
     })
     
-    test('[controller] delete user', async () => {
+    test('[controller] delete module', async () => {
         let req = {
             user: mock.USER,
             params: {
-                moduleId: mock.COURSE.moduleId,
+                moduleId: mock.MODULE.moduleId,
             },
             header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }

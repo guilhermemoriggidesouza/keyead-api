@@ -2,16 +2,19 @@ const courseRepository = require("../../repository/course")
 
 const createModuleHandler = async (req, res) => {
     try{
-        const { name, description, photo, active, certificated, listCategory } = req.body
+        const { 
+            name,
+            description,
+            courseId,
+            companyId,
+        } = req.body
         const { companyId } = req.user
 
         const createdModule = await courseRepository.create({
             name,
             description,
-            active,
-            certificated,
+            courseId,
             companyId,
-            photo
         })
 
         if(!createdModule){
@@ -28,12 +31,12 @@ const createModuleHandler = async (req, res) => {
 
 const deleteModuleHandler = async (req, res) => {
     try{
-        const { courseId } = req.params
+        const { moduleId } = req.params
         const { companyId } = req.user
  
         const removedModule = await courseRepository.delete({
             where: {
-                courseId,
+                moduleId,
                 companyId
             }
         })
@@ -51,14 +54,14 @@ const deleteModuleHandler = async (req, res) => {
 
 const updateModuleHandler = async (req, res) =>{
     try{
-        const { courseId } = req.params
+        const { moduleId } = req.params
         const { newFields } = req.body
         const { companyId } = req.user
 
         const updatedModule = await courseRepository.update(newFields, {
             where: {
                 companyId,
-                courseId
+                moduleId
             }
         })
         

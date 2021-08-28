@@ -2,6 +2,16 @@ const courseRepository = require("../../repository/course")
 const categoryCourseRepository = require("../../repository/category-course")
 const categoryRepository = require("../../repository/category")
 
+const insertListCategoryInCourse = (listCategory) => {
+    listCategory.forEach(categoryId => {
+        categoryCourseRepository.create({
+            categoryId,
+            courseId: createdCourse.courseId,
+            companyId
+        })
+    })
+}
+
 const createCourseHandler = async (req, res) => {
     try{
         const { name, description, photo, active, certificated, listCategory } = req.body
@@ -21,13 +31,7 @@ const createCourseHandler = async (req, res) => {
             return
         }
         
-        listCategory.forEach(categoryId => {
-            categoryCourseRepository.create({
-                categoryId,
-                courseId: createdCourse.courseId,
-                companyId
-            })
-        })
+        insertListCategoryInCourse(listCategory)
 
         res.status(200).json({ success: true, data: createdCourse || {}})
     } catch (error) {
@@ -40,7 +44,14 @@ const deleteCourseHandler = async (req, res) => {
     try{
         const { courseId } = req.params
         const { companyId } = req.user
- 
+        
+        await categoryCourseRepository.delete({
+            where: {
+                courseId,
+                companyId
+            }
+        })
+
         const removedCourse = await courseRepository.delete({
             where: {
                 courseId,
@@ -64,6 +75,16 @@ const updateCourseHandler = async (req, res) =>{
         const { courseId } = req.params
         const { newFields } = req.body
         const { companyId } = req.user
+
+        if(newFields.listCategory && newFields.listCategory > 0){
+            await categoryCourseRepository.delete({
+                where: {
+                    courseId,
+                    companyId
+                }
+            })
+            insertListCategoryInCourse(newFields.listCategory)
+        }
 
         const updatedCourse = await courseRepository.update(newFields, {
             where: {
