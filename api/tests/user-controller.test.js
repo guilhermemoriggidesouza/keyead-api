@@ -128,7 +128,7 @@ describe("[controller] tests userController", ()=> {
         }
         
         const removedUser = jest.spyOn(userRepository, 'delete');
-        removedUser.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
+        removedUser.mockReturnValue(new Promise((resolve, error) => resolve(1)));
     
         await deleteUserHandler(req, res)
     

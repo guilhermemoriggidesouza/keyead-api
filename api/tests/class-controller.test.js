@@ -105,7 +105,7 @@ describe("[controller] tests class controller", ()=> {
         }
         
         const removeCclass = jest.spyOn(classRepository, 'delete');
-        removeCclass.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
+        removeCclass.mockReturnValue(new Promise((resolve, error) => resolve(1)));
     
         await deleteCourseHandler(req, res)
     

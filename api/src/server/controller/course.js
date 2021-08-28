@@ -6,7 +6,7 @@ const insertListCategoryInCourse = (listCategory, courseId, companyId) => {
     listCategory.forEach(categoryId => {
         categoryCourseRepository.create({
             categoryId,
-            courseId: courseId,
+            courseId,
             companyId
         })
     })
@@ -76,7 +76,7 @@ const updateCourseHandler = async (req, res) =>{
         const { newFields } = req.body
         const { companyId } = req.user
 
-        if(newFields.listCategory && newFields.listCategory > 0){
+        if(newFields.listCategory && newFields.listCategory.length > 0){
             await categoryCourseRepository.delete({
                 where: {
                     courseId,

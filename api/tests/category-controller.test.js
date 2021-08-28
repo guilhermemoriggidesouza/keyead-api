@@ -99,7 +99,7 @@ describe("[controller] tests Category Controller", ()=> {
         }
         
         const removedCategory = jest.spyOn(categoryRepository, 'delete');
-        removedCategory.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
+        removedCategory.mockReturnValue(new Promise((resolve, error) => resolve(1)));
     
         await deleteCategoryHandler(req, res)
     

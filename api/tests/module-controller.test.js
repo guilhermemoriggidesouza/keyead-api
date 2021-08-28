@@ -98,7 +98,7 @@ describe("[controller] tests module controller", ()=> {
         }
         
         const removeCmodule = jest.spyOn(moduleRepository, 'delete');
-        removeCmodule.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
+        removeCmodule.mockReturnValue(new Promise((resolve, error) => resolve(1)));
     
         await deleteModuleHandler(req, res)
     

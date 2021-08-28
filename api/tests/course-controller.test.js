@@ -111,7 +111,7 @@ describe("[controller] tests course controller", () => {
         })
     });
 
-    test('[controller] update course', async () => {
+    test('[controller] update without list category course', async () => {
         let req = {
             user: mock.USER,
             params: {
@@ -128,15 +128,43 @@ describe("[controller] tests course controller", () => {
         const updateCourse = jest.spyOn(courseRepository, 'update');
         updateCourse.mockReturnValue(new Promise((resolve, error) => resolve([1])));
 
-        const removeCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
-        removeCategoryCourse.mockReturnValue(new Promise((resolve, error) =>  resolve(2)));
-
-        const createCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
-        createCategoryCourse.mockReturnValue(new Promise((resolve, error) => resolve(mock.CATEGORY_COURSE)));
-
-
         await updateCourseHandler(req, res)
 
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toBeDefined();
+        expect(res.json).toHaveBeenCalledWith({ success: true, updated: 1 })
+    })
+
+    test('[controller] update with list category course', async () => {
+        let req = {
+            user: mock.USER,
+            params: {
+                courseId: mock.COURSE.courseId,
+            },
+            body: {
+                newFields: {
+                    name: "moriggi",
+                    listCategory: [
+                        1, 2
+                    ]
+                }
+            },
+            header: (_) => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
+        }
+
+        const updateCourse = jest.spyOn(courseRepository, 'update');
+        updateCourse.mockReturnValue(new Promise((resolve, error) => resolve([1])));
+
+        const removeCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
+        removeCategoryCourse.mockReturnValue(new Promise((resolve, error) =>  resolve(2)));
+        
+        const createCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
+        createCategoryCourse.mockReturnValue(new Promise((resolve, error) => resolve(mock.CATEGORY_COURSE)));
+        createCategoryCourse.mockReturnValue(new Promise((resolve, error) => resolve(mock.CATEGORY_COURSE)));
+        
+
+        await updateCourseHandler(req, res)
+        
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
         expect(res.json).toHaveBeenCalledWith({ success: true, updated: 1 })
@@ -150,9 +178,12 @@ describe("[controller] tests course controller", () => {
             },
             header: (_) => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
-
-        const removeCcourse = jest.spyOn(courseRepository, 'delete');
-        removeCcourse.mockReturnValue(new Promise((resolve, error) => resolve(1)));
+        
+        const removeCourse = jest.spyOn(courseRepository, 'delete');
+        removeCourse.mockReturnValue(new Promise((resolve, error) => resolve(1)));
+        
+        const removeCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
+        removeCategoryCourse.mockReturnValue(new Promise((resolve, error) =>  resolve(2)));
 
         await deleteCourseHandler(req, res)
 
