@@ -3,7 +3,7 @@ const auth = require("../../middleware/auth")
 
 module.exports = [
     { 
-        name: "/userId",
+        name: "/:userId",
         handler: updateUserHandler,
         auth
     },

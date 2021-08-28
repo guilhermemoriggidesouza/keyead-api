@@ -1,13 +1,11 @@
 const courseRepository = require("../../repository/course")
-const categoryClassRepository = require("../../repository/category-course")
-const categoryRepository = require("../../repository/category")
 
-const createClassHandler = async (req, res) => {
+const createModuleHandler = async (req, res) => {
     try{
         const { name, description, photo, active, certificated, listCategory } = req.body
         const { companyId } = req.user
 
-        const createdClass = await courseRepository.create({
+        const createdModule = await courseRepository.create({
             name,
             description,
             active,
@@ -16,67 +14,67 @@ const createClassHandler = async (req, res) => {
             photo
         })
 
-        if(!createdClass){
+        if(!createdModule){
             res.status(200).json({})
             return
         }
         
-        res.status(200).json({ success: true, data: createdClass || {}})
+        res.status(200).json({ success: true, data: createdModule || {}})
     } catch (error) {
         res.status(500).json(error)
-        console.log("[controller] error on create Class", error, req.body)
+        console.log("[controller] error on create Module", error, req.body)
     }
 }
 
-const deleteClassHandler = async (req, res) => {
+const deleteModuleHandler = async (req, res) => {
     try{
         const { courseId } = req.params
         const { companyId } = req.user
  
-        const removedClass = await courseRepository.delete({
+        const removedModule = await courseRepository.delete({
             where: {
                 courseId,
                 companyId
             }
         })
         
-        if(removedClass == 0){
+        if(removedModule == 0){
             res.status(400).json({})
             return
         }
-        res.status(200).json({ success: true, removed: removedClass[0] })
+        res.status(200).json({ success: true, removed: removedModule[0] })
     } catch (error) {
         res.status(500).json(error)
-        console.log("[controller] error on delete Class", error, req.body)
+        console.log("[controller] error on delete Module", error, req.body)
     }
 }
 
-const updateClassHandler = async (req, res) =>{
+const updateModuleHandler = async (req, res) =>{
     try{
         const { courseId } = req.params
         const { newFields } = req.body
         const { companyId } = req.user
 
-        const updatedClass = await courseRepository.update(newFields, {
+        const updatedModule = await courseRepository.update(newFields, {
             where: {
                 companyId,
                 courseId
             }
         })
         
-        if(!updatedClass[0]){
+        if(!updatedModule[0]){
             res.status(400).json({})
             return
         }
         
-        res.status(200).json({ success: true, updated: updatedClass[0]})
+        res.status(200).json({ success: true, updated: updatedModule[0]})
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on update course", error, req.body)
     }
 }
 
-const getClassHandler = async (req, res) =>{
+const getModuleHandler = async (req, res) =>{
     try{
         const { companyId } = req.user
         const where = {
@@ -106,8 +104,8 @@ const getClassHandler = async (req, res) =>{
 }
 
 module.exports = {
-    createClassHandler,
-    deleteClassHandler,
-    getClassHandler,
-    updateClassHandler,
+    createModuleHandler,
+    deleteModuleHandler,
+    getModuleHandler,
+    updateModuleHandler,
 }

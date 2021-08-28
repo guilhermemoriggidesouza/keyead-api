@@ -53,5 +53,15 @@ module.exports = {
         name: "qyon",
         email: "qyon@qyon.com",
         logo: null
+    },
+    MODULE: {
+        moduleId: 1,
+        name: "MODULO 1",
+        description: "TESTE",
+        duration: 2000,
+        courseId: 1,
+        companyId: 1,
+        createdAt: "2021-08-11 21:28:00.000",
+        updateAt: "2021-08-11 21:28:00.000"
     }
 }

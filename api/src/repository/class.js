@@ -3,8 +3,8 @@ const model = require("../models")
 module.exports = {
     async getOne(params){
         try {
-            let category = await model.Class.findOne(params)
-            return category ? category.dataValues : {}
+            let class_ = await model.Class.findOne(params)
+            return class_ ? class_.dataValues : {}
         } catch (error) {
             console.log("[Repository][Class] error on get one Class ", { params, error})
             throw Error(error)
@@ -21,8 +21,8 @@ module.exports = {
     },
     async create(params){
         try {
-            let category = await model.Class.create(params)
-            return category ? category.dataValues : {}
+            let class_ = await model.Class.create(params)
+            return class_ ? class_.dataValues : {}
         } catch (error) {
             console.log("[Repository][Class] error on create Class ", { params, error})
             throw Error(error)
