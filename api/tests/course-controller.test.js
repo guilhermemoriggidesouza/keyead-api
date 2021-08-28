@@ -123,8 +123,10 @@ describe("[controller] tests course controller", ()=> {
     test('[controller] update user', async () => {
         let req = {
             user: mock.USER,
-            body: {
+            params: {
                 courseId: mock.COURSE.courseId,
+            },
+            body: {
                 newFields: {
                     name: "moriggi"
                 }

@@ -105,8 +105,10 @@ describe("[controller] tests Category Controller", ()=> {
     test('[controller] update category', async () => {
         let req = {
             user: mock.USER,
-            body: {
+            params: {
                 categoryId: mock.CATEGORY.categoryId,
+            },
+            body: {
                 newFields: {
                     name: "moriggi"
                 }

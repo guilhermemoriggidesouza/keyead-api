@@ -33,6 +33,7 @@ const deleteCategoryHandler = async (req, res) => {
         
         if(!removedUser[0]){
             res.status(400).json({})
+            return
         }
         res.status(200).json({ success: true, removed: removedUser[0] })
     } catch (error) {
@@ -57,6 +58,7 @@ const updateCategoryHandler = async (req, res) =>{
         
         if(!updatedCategory[0]){
             res.status(400).json({})
+            return
         }
         
         res.status(200).json({ success: true, updated: updatedCategory[0]})

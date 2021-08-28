@@ -50,6 +50,7 @@ const deleteCourseHandler = async (req, res) => {
         
         if(!removedCourse[0]){
             res.status(400).json({})
+            return
         }
         res.status(200).json({ success: true, removed: removedCourse[0] })
     } catch (error) {
@@ -73,6 +74,7 @@ const updateCourseHandler = async (req, res) =>{
         
         if(!updatedCourse[0]){
             res.status(400).json({})
+            return
         }
         
         res.status(200).json({ success: true, updated: updatedCourse[0]})

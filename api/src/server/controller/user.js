@@ -130,6 +130,7 @@ const updateUserHandler = async (req, res) => {
         
         if(!updatedUser[0]){
             res.status(400).json({})
+            return
         }
         
         res.status(200).json({ success:true, updated: updatedUser[0]})
