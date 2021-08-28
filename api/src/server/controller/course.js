@@ -60,7 +60,8 @@ const deleteCourseHandler = async (req, res) => {
 
 const updateCourseHandler = async (req, res) =>{
     try{
-        const { courseId, newFields } = req.body
+        const { courseId } = req.params
+        const { newFields } = req.body
         const { companyId } = req.user
 
         const updatedCourse = await courseRepository.update(newFields, {

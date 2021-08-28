@@ -44,7 +44,8 @@ const deleteCategoryHandler = async (req, res) => {
 
 const updateCategoryHandler = async (req, res) =>{
     try{
-        const { categoryId, newFields } = req.body
+        const { categoryId } = req.params
+        const { newFields } = req.body
         const { companyId } = req.user
 
         const updatedCategory = await categoryRepository.update(newFields, {

@@ -117,7 +117,8 @@ const createUserHandler = async (req, res) => {
 
 const updateUserHandler = async (req, res) => {
     try {
-        const { userId, newFields } = req.body
+        const { userId } = req.params
+        const { newFields } = req.body
         const { companyId } = req.user 
         
         const updatedUser = await userRepository.update(newFields, {
