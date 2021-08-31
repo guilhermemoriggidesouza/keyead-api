@@ -155,7 +155,7 @@ const deleteUserHandler = async (req, res) => {
         if(removedUser == 0){
             res.status(400).json({})
         }
-        res.status(200).json({ success:true, removed: removedUser[0] })
+        res.status(200).json({ success:true, removed: removedUser })
         
     } catch (error) {
         res.status(500).json(error)

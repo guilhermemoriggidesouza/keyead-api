@@ -1,19 +1,18 @@
-const courseRepository = require("../../repository/course")
+const moduleRepository = require("../../repository/module")
 
 const createModuleHandler = async (req, res) => {
     try{
         const { 
             name,
             description,
-            courseId,
-            companyId,
+            moduleId,
         } = req.body
         const { companyId } = req.user
 
-        const createdModule = await courseRepository.create({
+        const createdModule = await moduleRepository.create({
             name,
             description,
-            courseId,
+            moduleId,
             companyId,
         })
 
@@ -34,7 +33,7 @@ const deleteModuleHandler = async (req, res) => {
         const { moduleId } = req.params
         const { companyId } = req.user
  
-        const removedModule = await courseRepository.delete({
+        const removedModule = await moduleRepository.delete({
             where: {
                 moduleId,
                 companyId
@@ -45,7 +44,7 @@ const deleteModuleHandler = async (req, res) => {
             res.status(400).json({})
             return
         }
-        res.status(200).json({ success: true, removed: removedModule[0] })
+        res.status(200).json({ success: true, removed: removedModule })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on delete Module", error, req.body)
@@ -58,7 +57,7 @@ const updateModuleHandler = async (req, res) =>{
         const { newFields } = req.body
         const { companyId } = req.user
 
-        const updatedModule = await courseRepository.update(newFields, {
+        const updatedModule = await moduleRepository.update(newFields, {
             where: {
                 companyId,
                 moduleId
@@ -84,15 +83,10 @@ const getModuleHandler = async (req, res) =>{
             companyId,
         }
 
-        if(req.params.courseId) where.courseId = req.params.courseId
-        const courses = await courseRepository.getAll({
+        if(req.params.moduleId) where.moduleId = req.params.moduleId
+        const courses = await moduleRepository.getAll({
             limit: where.coursesId ? 1 : undefined,
             where,
-            include: [
-                {
-                    model: categoryRepository.model
-                }
-            ]
         })
 
         if(!courses){

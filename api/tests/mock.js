@@ -63,5 +63,16 @@ module.exports = {
         companyId: 1,
         createdAt: "2021-08-11 21:28:00.000",
         updateAt: "2021-08-11 21:28:00.000"
+    },
+    CLASS: {
+        classId: 1,
+        name: "TESTE",
+        description: "TESTE",
+        video: "video.mp4",
+        duration: 200,
+        moduleId: 1,
+        companyId: 1,
+        createdAt: "2021-08-11 21:28:00.000",
+        updateAt: "2021-08-11 21:28:00.000"
     }
 }

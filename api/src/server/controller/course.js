@@ -63,7 +63,7 @@ const deleteCourseHandler = async (req, res) => {
             res.status(400).json({})
             return
         }
-        res.status(200).json({ success: true, removed: removedCourse[0] })
+        res.status(200).json({ success: true, removed: removedCourse })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on delete Course", error, req.body)

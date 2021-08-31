@@ -1,8 +1,5 @@
-'use strict';
-
-module.exports = {
-    up: (queryInterface, DataTypes) => {
-      return queryInterface.createTable('Class', {
+module.exports = (sequelize, DataTypes) => {
+    const Class = sequelize.define('Class', {
         classId: {
             allowNull: false,
             autoIncrement: true,
@@ -22,12 +19,12 @@ module.exports = {
             type: DataTypes.STRING,
         },
         createdAt: {
-          allowNull: false,
-          type: DataTypes.DATE,
+            allowNull: false,
+            type: DataTypes.DATE,
         },
         updatedAt: {
-          allowNull: false,
-          type: DataTypes.DATE,
+            allowNull: false,
+            type: DataTypes.DATE,
         },
         duration: {
             allowNull: false,
@@ -38,22 +35,23 @@ module.exports = {
             type: DataTypes.INTEGER,
             references: {
                 key: "moduleId",
-                model: "Modules",
+                model: "Class",
             },
         },
         companyId: {
-          allowNull: false,
-          type: DataTypes.INTEGER,
-          references: {
-            key: "companyId",
-            model: "Company",
-          },
+            allowNull: false,
+            type: DataTypes.INTEGER,
+            references: {
+                key: "companyId",
+                model: "Company",
+            },
         },
-      }, { freezeTableName: true});
-    },
-  
-    down: (queryInterface) => {
-      return queryInterface.dropTable('Class');
+    }, { freezeTableName: true });
+
+    Class.associate = (models) => {
+        Class.belongsTo(models.Company, { foreignKey: 'companyId' })
+        Class.belongsTo(models.Course, { foreignKey: 'courseId' })
     }
-  };
-  
+
+    return Class;
+}

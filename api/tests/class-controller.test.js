@@ -1,6 +1,5 @@
-const {  getCourseHandler, createCourseHandler, updateCourseHandler, deleteCourseHandler, } = require("../src/server/controller/class")
+const {  getClassHandler, createClassHandler, updateClassHandler, deleteClassHandler, } = require("../src/server/controller/class")
 const classRepository = require("../src/repository/class");
-const categoryCourseRepository = require("../src/repository/category-class")
 const mock = require("./mock")
 
 describe("[controller] tests class controller", ()=> {
@@ -14,68 +13,68 @@ describe("[controller] tests class controller", ()=> {
             header: (_) => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
             user: mock.USER,
             body: { 
-                name: "teste", 
-                description: "teste de curso", 
-                active: true, 
-                certificated: true, 
-                listCategory: [1, 2, 3]
+                classId: 1,
+                name: "TESTE",
+                description: "TESTE",
+                video: "video.mp4",
+                duration: 200,
+                moduleId: 1,
+                companyId: 1,
+                createdAt: "2021-08-11 21:28:00.000",
+                updateAt: "2021-08-11 21:28:00.000"
             }
         }
 
-        const createCourse = jest.spyOn(classRepository, 'create');
-        const createCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
-
-        createCourse.mockReturnValue(new Promise((resolve, error) => resolve(mock.COURSE)));
-        createCategoryCourse.mockReturnValue(new Promise((resolve, error) => resolve(mock.CATEGORY_COURSE)));
+        const createClass = jest.spyOn(classRepository, 'create');
+        createClass.mockReturnValue(new Promise((resolve, error) => resolve(mock.COURSE)));
         
-        await createCourseHandler(req, res)
+        await createClassHandler(req, res)
         
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({success: true, data: mock.COURSE});
     });
         
         
-    test('[controller] get user by classCd', async () => {
+    test('[controller] get class by classId', async () => {
         let req = {
             user: mock.USER,
             params: {
-                userId: mock.USER.userId
+                userId: mock.CLASS.userId
             },
             header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
         
         const user = jest.spyOn(classRepository, 'getAll');
-        user.mockReturnValue(new Promise((resolve, error) => resolve(mock.COURSE)));
+        user.mockReturnValue(new Promise((resolve, error) => resolve(mock.CLASS)));
 
-        await getCourseHandler(req, res)
+        await getClassHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({success: true, data: mock.COURSE})
+        expect(res.json).toHaveBeenCalledWith({success: true, data: mock.CLASS})
     });
 
     test('[controller] get users', async () => {
         let req = {
             user: mock.USER,
             params : {},
-            header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
         
         const user = jest.spyOn(classRepository, 'getAll');
-        user.mockReturnValue(new Promise((resolve, error) => resolve([ mock.COURSE, mock.COURSE ])));
+        user.mockReturnValue(new Promise((resolve, error) => resolve([ mock.CLASS, mock.CLASS ])));
 
-        await getCourseHandler(req, res)
+        await getClassHandler(req, res)
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
-        expect(res.json).toHaveBeenCalledWith({success: true, data: [ mock.COURSE, mock.COURSE ]})
+        expect(res.json).toHaveBeenCalledWith({success: true, data: [ mock.CLASS, mock.CLASS ]})
     });
     
     test('[controller] update user', async () => {
         let req = {
             user: mock.USER,
             params: {
-                classId: mock.COURSE.classId,
+                classId: mock.CLASS.classId,
             },
             body: {
                 newFields: {
@@ -88,7 +87,7 @@ describe("[controller] tests class controller", ()=> {
         const updateCclass = jest.spyOn(classRepository, 'update');
         updateCclass.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
     
-        await updateCourseHandler(req, res)
+        await updateClassHandler(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();
@@ -99,7 +98,7 @@ describe("[controller] tests class controller", ()=> {
         let req = {
             user: mock.USER,
             params: {
-                classId: mock.COURSE.classId,
+                classId: mock.CLASS.classId,
             },
             header: (_)=> "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
         }
@@ -107,7 +106,7 @@ describe("[controller] tests class controller", ()=> {
         const removeCclass = jest.spyOn(classRepository, 'delete');
         removeCclass.mockReturnValue(new Promise((resolve, error) => resolve(1)));
     
-        await deleteCourseHandler(req, res)
+        await deleteClassHandler(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toBeDefined();

@@ -1,19 +1,18 @@
-const courseRepository = require("../../repository/course")
-const categoryClassRepository = require("../../repository/category-course")
+const classRepository = require("../../repository/class")
 const categoryRepository = require("../../repository/category")
 
 const createClassHandler = async (req, res) => {
     try{
-        const { name, description, photo, active, certificated, listCategory } = req.body
+        const { name, description, video, duration, moduleId, } = req.body
         const { companyId } = req.user
 
-        const createdClass = await courseRepository.create({
+        const createdClass = await classRepository.create({
             name,
             description,
-            active,
-            certificated,
-            companyId,
-            photo
+            video,
+            duration,
+            moduleId,
+            companyId
         })
 
         if(!createdClass){
@@ -30,12 +29,12 @@ const createClassHandler = async (req, res) => {
 
 const deleteClassHandler = async (req, res) => {
     try{
-        const { courseId } = req.params
+        const { classId } = req.params
         const { companyId } = req.user
  
-        const removedClass = await courseRepository.delete({
+        const removedClass = await classRepository.delete({
             where: {
-                courseId,
+                classId,
                 companyId
             }
         })
@@ -44,7 +43,7 @@ const deleteClassHandler = async (req, res) => {
             res.status(400).json({})
             return
         }
-        res.status(200).json({ success: true, removed: removedClass[0] })
+        res.status(200).json({ success: true, removed: removedClass })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on delete Class", error, req.body)
@@ -53,14 +52,14 @@ const deleteClassHandler = async (req, res) => {
 
 const updateClassHandler = async (req, res) =>{
     try{
-        const { courseId } = req.params
+        const { classId } = req.params
         const { newFields } = req.body
         const { companyId } = req.user
 
-        const updatedClass = await courseRepository.update(newFields, {
+        const updatedClass = await classRepository.update(newFields, {
             where: {
                 companyId,
-                courseId
+                classId
             }
         })
         
@@ -83,22 +82,17 @@ const getClassHandler = async (req, res) =>{
             companyId,
         }
 
-        if(req.params.courseId) where.courseId = req.params.courseId
-        const courses = await courseRepository.getAll({
-            limit: where.coursesId ? 1 : undefined,
+        if(req.params.classId) where.classId = req.params.classId
+        const classes = await classRepository.getAll({
+            limit: where.classId ? 1 : undefined,
             where,
-            include: [
-                {
-                    model: categoryRepository.model
-                }
-            ]
         })
 
-        if(!courses){
+        if(!classes){
             res.status(400).json([])
             return
         }
-        res.status(200).json({ success: true, data: courses })
+        res.status(200).json({ success: true, data: classes })
     } catch (error) {
         res.status(500).json(error)
         console.log("[controller] error on get Category", error, req.body)

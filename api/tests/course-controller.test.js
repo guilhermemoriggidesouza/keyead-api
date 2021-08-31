@@ -155,7 +155,7 @@ describe("[controller] tests course controller", () => {
         const updateCourse = jest.spyOn(courseRepository, 'update');
         updateCourse.mockReturnValue(new Promise((resolve, error) => resolve([1])));
 
-        const removeCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
+        const removeCategoryCourse = jest.spyOn(categoryCourseRepository, 'delete');
         removeCategoryCourse.mockReturnValue(new Promise((resolve, error) =>  resolve(2)));
         
         const createCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
@@ -182,7 +182,7 @@ describe("[controller] tests course controller", () => {
         const removeCourse = jest.spyOn(courseRepository, 'delete');
         removeCourse.mockReturnValue(new Promise((resolve, error) => resolve(1)));
         
-        const removeCategoryCourse = jest.spyOn(categoryCourseRepository, 'create');
+        const removeCategoryCourse = jest.spyOn(categoryCourseRepository, 'delete');
         removeCategoryCourse.mockReturnValue(new Promise((resolve, error) =>  resolve(2)));
 
         await deleteCourseHandler(req, res)

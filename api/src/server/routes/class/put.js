@@ -3,7 +3,7 @@ const auth = require("../../middleware/auth")
 
 module.exports = [
     { 
-        name: "/",
+        name: "/:classId",
         handler: createCourseHandler,
         auth,
     },
