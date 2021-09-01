@@ -135,7 +135,7 @@ const updateUserHandler = async (req, res) => {
         if(newFields.listCourses && newFields.listCourses.length > 0){
             await userCourseRepository.delete({
                 where: {
-                    courseId,
+                    userId,
                     companyId
                 }
             })

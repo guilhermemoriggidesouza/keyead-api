@@ -259,7 +259,10 @@ describe("[controller] tests userController", ()=> {
         }
         
         const updatedUser = jest.spyOn(userRepository, 'update');
+        const updatedUser = jest.spyOn(userCourseRepository, 'delete');
+        const createdUser = jest.spyOn(userCourseRepository, 'create');
         updatedUser.mockReturnValue(new Promise((resolve, error) => error({})));
+        createdUser.mockReturnValue(new Promise((resolve, error) => error({})));
     
         await updateUserHandler(req, res)
     
