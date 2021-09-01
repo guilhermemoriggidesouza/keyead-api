@@ -6,6 +6,17 @@ const companyRepository = require("../../repository/company");
 const userCourseRepository = require("../../repository/user-course");
 const courseRepository = require('../../repository/course');
 
+const insertListCouseInUser = (listCourses, userId, companyId) => {
+    listCourses.forEach(courseId => {
+        categoryCourseRepository.create({
+            courseId,
+            userId,
+            companyId
+        })
+    })
+}
+
+
 const validateLoginHandler = async (req, res) => {
     try{
         const { alias, email, password } = req.body
@@ -121,6 +132,16 @@ const updateUserHandler = async (req, res) => {
         const { newFields } = req.body
         const { companyId } = req.user 
         
+        if(newFields.listCourses && newFields.listCourses.length > 0){
+            await userCourseRepository.delete({
+                where: {
+                    courseId,
+                    companyId
+                }
+            })
+            insertListCouseInUser(newFields.listCourses, userId, companyId)
+        }
+
         const updatedUser = await userRepository.update(newFields, {
             where: {
                 companyId,
