@@ -235,6 +235,11 @@ describe("[controller] tests userController", ()=> {
         }
         
         const updatedUser = jest.spyOn(userRepository, 'update');
+        const deletedUser = jest.spyOn(userCourseRepository, 'delete');
+        const createdUser = jest.spyOn(userCourseRepository, 'create');
+
+        createdUser.mockReturnValue(new Promise((resolve, error) => resolve(mock.USER_COURSE)));
+        deletedUser.mockReturnValue(new Promise((resolve, error) => resolve(1)));
         updatedUser.mockReturnValue(new Promise((resolve, error) => resolve([ 1 ])));
     
         await updateUserHandler(req, res)
@@ -259,10 +264,12 @@ describe("[controller] tests userController", ()=> {
         }
         
         const updatedUser = jest.spyOn(userRepository, 'update');
-        const updatedUser = jest.spyOn(userCourseRepository, 'delete');
+        const deletedUser = jest.spyOn(userCourseRepository, 'delete');
         const createdUser = jest.spyOn(userCourseRepository, 'create');
+
         updatedUser.mockReturnValue(new Promise((resolve, error) => error({})));
         createdUser.mockReturnValue(new Promise((resolve, error) => error({})));
+        deletedUser.mockReturnValue(new Promise((resolve, error) => error({})));
     
         await updateUserHandler(req, res)
     

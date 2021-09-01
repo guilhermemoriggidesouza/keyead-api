@@ -74,5 +74,14 @@ module.exports = {
         companyId: 1,
         createdAt: "2021-08-11 21:28:00.000",
         updateAt: "2021-08-11 21:28:00.000"
+    },
+    USER_COURSE: {
+        userCourseId :1,
+        companyId : 1,
+        courseId : 1,
+        createdAt : "",
+        createdAt: "2021-08-11 21:28:00.000",
+        updateAt: "2021-08-11 21:28:00.000",
+        userId : 1,
     }
 }

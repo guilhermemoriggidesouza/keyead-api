@@ -166,6 +166,13 @@ const deleteUserHandler = async (req, res) => {
         const { userId } = req.params
         const { companyId } = req.user 
         
+        await userCourseRepository.delete({
+            where:{
+                companyId,
+                userId
+            }
+        })
+
         const removedUser = await userRepository.delete({
             where: {
                 companyId,
