@@ -8,7 +8,7 @@ const courseRepository = require('../../repository/course');
 
 const insertListCouseInUser = (listCourses, userId, companyId) => {
     listCourses.forEach(courseId => {
-        categoryCourseRepository.create({
+        userCourseRepository.create({
             courseId,
             userId,
             companyId
