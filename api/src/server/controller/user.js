@@ -52,17 +52,17 @@ const getUsersHandler = async (req, res) => {
         const { companyId } = req.user
         const where = {
             companyId,
-            include: [
-                {
-                    model: courseRepository.model
-                }
-            ]
         }
         
         if(req.params.userId) where.userId = req.params.userId
         const users = await userRepository.getAll({
             limit: where.userId ? 1 : undefined,
-            where
+            where,
+            include: where.userId ? [
+                {
+                    model: courseRepository.model
+                }
+            ] : undefined
         })
         
         if(!users){
