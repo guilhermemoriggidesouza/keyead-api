@@ -3,7 +3,7 @@ const fileService = require("../../service/file")
 
 const createCompanyHandler = async (req, res) => {
     try{
-        const { name, email, alias, logo, bucketName} = req.body
+        const { name, email, alias, logo, bucketName } = req.body
 
         let companyInserted = await companyRepository.create({
             name,
@@ -18,7 +18,8 @@ const createCompanyHandler = async (req, res) => {
             return
         }
 
-        await fileService.createBucket({ bucketName })
+        const bucket = await fileService.createBucketForCompany({ bucketName })
+        console.log(bucket)
 
         res.status(200).json(companyInserted)
     } catch (error) {

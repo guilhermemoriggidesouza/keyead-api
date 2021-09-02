@@ -11,5 +11,9 @@ module.exports = {
     } ,
     jwt: {
         privateKey: process.env.JWT_PRIVATE_KEY
+    },
+    aws:{
+        userKey: process.env.AWS_ACCESS_KEY_ID,
+        userSecret:  process.env.AWS_SECRET_KEY_ID
     }
 }

@@ -1,7 +1,11 @@
 var AWS = require('aws-sdk');
+var config = require('./config');
+
 AWS.config.update({
     region: 'us-west-2',
-    accessKeyId: config.s3.userKey,
-    secretAccessKey: config.s3.userSecret,
 });
-module.exports = new AWS.S3();
+
+module.exports = new AWS.S3({
+    accessKeyId: config.aws.userKey,
+    secretAccessKey: config.aws.userSecret,
+});

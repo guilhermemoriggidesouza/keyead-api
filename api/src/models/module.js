@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.DATE,
         },
         duration: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.INTEGER
         },
         courseId: {
