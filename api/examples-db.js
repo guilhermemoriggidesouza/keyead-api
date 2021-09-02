@@ -9,6 +9,7 @@ companyRepository.create({
     alias: "local",
     logo: "",
     email: "teste@gmail.com",
+    bucketName: "teste-company",
 })
 
 userRepository.create({

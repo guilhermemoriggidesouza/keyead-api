@@ -2,13 +2,14 @@ const companyRepository = require("../../repository/company")
 
 const createCompanyHandler = async (req, res) => {
     try{
-        const { name, email, alias, logo, } = req.body
+        const { name, email, alias, logo, bucketName} = req.body
 
         let companyInserted = await companyRepository.create({
             name,
             alias,
             logo,
             email,
+            bucketName
         })
 
         if(!companyInserted){

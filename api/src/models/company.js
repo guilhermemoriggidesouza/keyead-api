@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             type: DataTypes.DATE,
         },
+        bucketName: {
+            allowNull: false,
+            type: DataTypes.STRING,
+        },
         updatedAt: {
             allowNull: false,
             type: DataTypes.DATE,

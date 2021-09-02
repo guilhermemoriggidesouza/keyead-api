@@ -1,10 +1,10 @@
-const { getCourseHandler } = require("../../controller/course")
+const { getClassHandler } = require("../../controller/class")
 const auth = require("../../middleware/auth")
 
 module.exports = [
     { 
-        name: "/:courseId?",
-        handler: getCourseHandler,
+        name: "/:classId?",
+        handler: getClassHandler,
         auth,
     },
 ]

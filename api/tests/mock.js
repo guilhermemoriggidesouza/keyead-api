@@ -52,6 +52,7 @@ module.exports = {
         alias: "qyon",
         name: "qyon",
         email: "qyon@qyon.com",
+        bucketName: "teste-company",
         logo: null
     },
     MODULE: {

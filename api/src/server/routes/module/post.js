@@ -1,10 +1,10 @@
-const { createCourseHandler } = require("../../controller/course")
+const { createModuleHandler } = require("../../controller/module")
 const auth = require("../../middleware/auth")
 
 module.exports = [
     { 
         name: "/",
-        handler: createCourseHandler,
+        handler: createModuleHandler,
         auth,
     },
 ]
