@@ -1,5 +1,8 @@
-module.exports = (sequelize, DataTypes) => {
-    const Modules = sequelize.define('Modules', {
+'use strict';
+
+module.exports = {
+    up: (queryInterface, DataTypes) => {
+      return queryInterface.createTable('Module', {
         moduleId: {
             allowNull: false,
             autoIncrement: true,
@@ -29,17 +32,24 @@ module.exports = (sequelize, DataTypes) => {
         courseId: {
             allowNull: false,
             type: DataTypes.INTEGER,
+            references: {
+                key: "courseId",
+                model: "Course",
+            },
         },
         companyId: {
           allowNull: false,
           type: DataTypes.INTEGER,
+          references: {
+            key: "companyId",
+            model: "Company",
+          },
         },
-    }, { freezeTableName: true});
-    
-    Modules.associate = (models)=>{
-        Modules.belongsTo(models.Company, { foreignKey: 'companyId' })
-        Modules.belongsTo(models.Course, { foreignKey: 'courseId' })
+      }, { freezeTableName: true});
+    },
+  
+    down: (queryInterface) => {
+      return queryInterface.dropTable('Module');
     }
-
-    return Modules;
-}
+  };
+  

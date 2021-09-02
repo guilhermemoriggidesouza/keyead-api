@@ -38,7 +38,7 @@ module.exports = {
             type: DataTypes.INTEGER,
             references: {
                 key: "moduleId",
-                model: "Modules",
+                model: "Module",
             },
         },
         companyId: {
