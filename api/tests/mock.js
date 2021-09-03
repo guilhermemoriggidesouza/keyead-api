@@ -84,5 +84,16 @@ module.exports = {
         createdAt: "2021-08-11 21:28:00.000",
         updateAt: "2021-08-11 21:28:00.000",
         userId : 1,
+    },
+    FILE: {
+        fileId: "",
+        name: "",
+        description: "",
+        size: "",
+        type: "",
+        createdAt: "2021-08-11 21:28:00.000",
+        updateAt: "2021-08-11 21:28:00.000",
+        userId: "",
+        companyId: ""
     }
 }

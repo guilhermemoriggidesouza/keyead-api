@@ -26,7 +26,7 @@ module.exports = {
             type: DataTypes.STRING,
         },
         bucketName: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.STRING,
         },
         createdAt: {

@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const config = require("../../infra/config")
 
 module.exports = function (req, res, next) {
-    console.log("teste")
     const token = req.header("Authenticate");
     if (!token)
         return res.status(401).send({ success: false, errors: ["Acesso negado."] });

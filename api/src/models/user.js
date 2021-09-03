@@ -52,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = (models)=>{
         User.belongsTo(models.Company, { foreignKey: 'companyId' })
         User.belongsToMany(models.Course, { through: 'UserCourse', foreignKey: "userId" })
+        User.hasMany(models.File, { foreignKey: 'userId' })
     }
 
     return User;

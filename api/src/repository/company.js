@@ -33,11 +33,12 @@ module.exports = {
             console.log("", { params, error})            
         }
     },
-    async update(params){
+    async update(values, options){
         try {
-            
+            return await model.Company.update(values, options)
         } catch (error) {
-            console.log("", { params, error})            
+            console.log("[Repository][Company] error on update Company", { values, error})        
+            throw Error(error)
         }
     },
     model: model.Company

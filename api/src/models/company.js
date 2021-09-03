@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
         },
         bucketName: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.STRING,
         },
         updatedAt: {
@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         Company.hasMany(models.User, { foreignKey: 'companyId' })
         Company.hasMany(models.Course, { foreignKey: 'companyId' })
         Company.hasMany(models.Category, { foreignKey: 'companyId' })
+        Company.hasMany(models.File, { foreignKey: 'companyId' })
     }
 
     return Company;
