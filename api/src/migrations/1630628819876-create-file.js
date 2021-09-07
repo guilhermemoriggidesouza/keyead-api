@@ -6,7 +6,7 @@ module.exports = {
         fileId: {
             allowNull: false,
             primaryKey: true,
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
         name: {
             allowNull: false,
@@ -17,7 +17,7 @@ module.exports = {
             type: DataTypes.STRING,
         },
         size: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.STRING,
         },
         type:{

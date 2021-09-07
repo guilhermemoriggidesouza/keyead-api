@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         },
         size: {
-            allowNull: false,
+            allowNull: true,
             type: DataTypes.STRING,
         },
         type:{
@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     File_.associate = (models)=>{
         File_.belongsTo(models.Company, { foreignKey: 'companyId' })
         File_.belongsTo(models.User, { foreignKey: "userId" })
+        File_.belongsTo(models.Course, { foreignKey: "fileId" })
     }
 
     return File_;

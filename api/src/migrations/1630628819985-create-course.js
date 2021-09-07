@@ -9,9 +9,13 @@ module.exports = {
             primaryKey: true,
             type: DataTypes.INTEGER,
         },
-        photo: {
+        fileId: {
             allowNull: true,
             type: DataTypes.STRING,
+            references: {
+                key: "fileId",
+                model: "File",
+            },
         },
         name: {
             allowNull: false,

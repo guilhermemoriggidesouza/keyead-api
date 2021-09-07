@@ -95,5 +95,8 @@ module.exports = {
         updateAt: "2021-08-11 21:28:00.000",
         userId: "",
         companyId: ""
+    },
+    RES_UPLOAD_FILE: {
+        Location: "https://i.pinimg.com/474x/cb/99/27/cb99275b388b88aba3b419abcba11aff.jpg"
     }
 }

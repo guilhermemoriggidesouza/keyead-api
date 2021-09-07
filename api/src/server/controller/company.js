@@ -29,14 +29,14 @@ const createCompanyHandler = async (req, res) => {
         if (bucket) {
             const createdFile = await fileService.insertFile({ 
                 name: `logo-${companyInserted.companyId}`, 
-                description: `Logo for company: ${companyInserted.companyId}`, 
+                description: `Logo para empresa: ${companyInserted.companyId}`, 
                 companyId: companyInserted.companyId, 
                 buffer: Buffer.from(logo.split(",")[1], "base64") 
             })
             if(createdFile){
                 const updatedWithBucketName = await companyRepository.update({ logo: createdFile.fileId }, {
                     where: {
-                        companyId
+                        companyId: companyInserted.companyId
                     }
                 })
                 if(updatedWithBucketName){

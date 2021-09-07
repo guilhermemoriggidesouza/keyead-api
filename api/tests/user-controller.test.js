@@ -1,5 +1,6 @@
 const {  validateLoginHandler, getUsersHandler, createUserHandler, updateUserHandler, deleteUserHandler, } = require("../src/server/controller/user")
 const userRepository = require("../src/repository/user");
+const userCourseRepository = require("../src/repository/user-course");
 const companyRepository = require("../src/repository/company");
 const mock = require("./mock")
 

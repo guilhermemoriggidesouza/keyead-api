@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             type: DataTypes.INTEGER,
         },
+        responsable: {
+            allowNull: false,
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     }, { freezeTableName: true});
     
     UserCourse.associate = (models)=>{

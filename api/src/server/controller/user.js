@@ -4,6 +4,7 @@ const config = require("../../infra/config")
 const userRepository = require("../../repository/user");
 const companyRepository = require("../../repository/company");
 const userCourseRepository = require("../../repository/user-course");
+const fileRepository = require("../../repository/file");
 const courseRepository = require('../../repository/course');
 
 const insertListCouseInUser = (listCourses, userId, companyId) => {
@@ -173,12 +174,19 @@ const deleteUserHandler = async (req, res) => {
             }
         })
 
+        await fileRepository.delete({
+            where:{
+                companyId,
+                userId
+            }
+        }).catch(error => console.log(error))
+
         const removedUser = await userRepository.delete({
             where: {
                 companyId,
                 userId
             }
-        })
+        }).catch(error => console.log(error))
         
         if(removedUser == 0){
             res.status(400).json({})

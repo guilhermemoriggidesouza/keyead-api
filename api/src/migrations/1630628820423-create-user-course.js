@@ -41,6 +41,11 @@ module.exports = {
             model: "Company",
           },
         },
+        responsable: {
+            allowNull: false,
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
       }, { freezeTableName: true});
     },
   

@@ -1,6 +1,8 @@
 const courseRepository = require("../../repository/course")
 const categoryCourseRepository = require("../../repository/category-course")
+const userCourseRepository = require("../../repository/user-course")
 const categoryRepository = require("../../repository/category")
+const fileService = require("../../service/file")
 
 const insertListCategoryInCourse = (listCategory, courseId, companyId) => {
     listCategory.forEach(categoryId => {
@@ -15,7 +17,15 @@ const insertListCategoryInCourse = (listCategory, courseId, companyId) => {
 const createCourseHandler = async (req, res) => {
     try{
         const { name, description, photo, active, certificated, listCategory } = req.body
-        const { companyId } = req.user
+        const { companyId, userId } = req.user
+
+        const createdFile = await fileService.insertFile({ 
+            name: `curso-${name.replace(/ /g, "").replace(/./g, "").replace(/;/g, "").replace(/,/g, "")}-thumb`, 
+            description: `thumb para curso: ${name.replace(/ /g, "").replace(/./g, "").replace(/;/g, "").replace(/,/g, "")}`, 
+            companyId, 
+            userId,
+            buffer: Buffer.from(photo.indexOf(",") != -1 ? photo.split(",")[1] : photo , "base64") 
+        })
 
         const createdCourse = await courseRepository.create({
             name,
@@ -23,14 +33,21 @@ const createCourseHandler = async (req, res) => {
             active,
             certificated,
             companyId,
-            photo
+            fileId: createdFile ? createdFile.fileId : ""
         })
 
         if(!createdCourse){
             res.status(200).json({})
             return
         }
-        
+
+        await userCourseRepository.create({
+            userId, 
+            companyId,
+            courseId: createdCourse.courseId,
+            responsable: true
+        })
+
         insertListCategoryInCourse(listCategory, createdCourse.courseId, companyId)
 
         res.status(200).json({ success: true, data: createdCourse || {}})
@@ -46,6 +63,13 @@ const deleteCourseHandler = async (req, res) => {
         const { companyId } = req.user
         
         await categoryCourseRepository.delete({
+            where: {
+                courseId,
+                companyId
+            }
+        })
+
+        await userCourseRepository.delete({
             where: {
                 courseId,
                 companyId
