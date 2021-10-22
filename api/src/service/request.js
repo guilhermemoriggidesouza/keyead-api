@@ -1,4 +1,5 @@
 var request = require("request");
+var fetch = require("node-fetch");
 
 module.exports = {
     requestHeader: ({url}) => new Promise((resolve, reject) => {

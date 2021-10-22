@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         File_.belongsTo(models.Company, { foreignKey: 'companyId' })
         File_.belongsTo(models.User, { foreignKey: "userId" })
         File_.belongsTo(models.Course, { foreignKey: "fileId" })
+        File_.belongsTo(models.Class, { foreignKey: "fileId" })
     }
 
     return File_;

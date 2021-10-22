@@ -3,6 +3,7 @@ const categoryCourseRepository = require("../../repository/category-course")
 const userCourseRepository = require("../../repository/user-course")
 const categoryRepository = require("../../repository/category")
 const fileService = require("../../service/file")
+const classRepository = require("../../repository/class")
 
 const insertListCategoryInCourse = (listCategory, courseId, companyId) => {
     listCategory.forEach(categoryId => {
@@ -70,6 +71,13 @@ const deleteCourseHandler = async (req, res) => {
         })
 
         await userCourseRepository.delete({
+            where: {
+                courseId,
+                companyId
+            }
+        })
+
+        await classRepository.delete({
             where: {
                 courseId,
                 companyId

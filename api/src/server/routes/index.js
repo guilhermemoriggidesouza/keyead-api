@@ -1,6 +1,5 @@
 const { readdirSync } = require("fs");
 const { join: joinPath } = require("path");
-
 const setup = (api) => {
     
     const src = readdirSync(joinPath(__dirname), {

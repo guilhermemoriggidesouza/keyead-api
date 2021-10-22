@@ -5,7 +5,7 @@ const fileRepository = require("../repository/file")
 const { fromBuffer } = require('file-type');
 var request = require("./request");
 
-const createBucketForCompanyIfNotExists = async ({ bucketName }) => {
+const ceateFoldeForCompanyIfNotExists = async ({ bucketName }) => {
     try {
         const bucketList = await S3.listBuckets().promise();
         const [bucket] = bucketList.Buckets.filter(buc => buc.Name == bucketName)
@@ -32,7 +32,7 @@ const insertFile = async ({ name, userId, description, companyId, buffer }) => {
             return null
         }
         
-        let bucket = await createBucketForCompanyIfNotExists({ bucketName: company.bucketName })
+        let bucket = await ceateFoldeForCompanyIfNotExists({ bucketName: company.bucketName })
         const typeFile = await fromBuffer(buffer)
         const data = await S3.upload({ Bucket: bucket.Name, Key: `${fileId}.${typeFile.ext}`, Body: buffer }).promise()
         if (!data) {
@@ -57,7 +57,23 @@ const insertFile = async ({ name, userId, description, companyId, buffer }) => {
     }
 }
 
+const parseKeyToUrl = async (class_, companyId) =>{
+    const company = await companyRepository.getOne({
+        where: {
+            companyId
+        }
+    })
+    if (!company.bucketName) {
+        return null
+    }
+    if(class_.fileId){
+        class_.url = `https://s3-aws-region.amazonaws.com/${company.bucketName}}/${class_.fileId}`
+    }
+    return class_
+} 
+
 module.exports = {
-    createBucketForCompanyIfNotExists,
-    insertFile
+    ceateFoldeForCompanyIfNotExists,
+    insertFile,
+    parseKeyToUrl
 }

@@ -36,6 +36,7 @@ const validateLoginHandler = async (req, res) => {
             where:{
                 email
             },
+            include: [ companyRepository.model ]
         }) 
 
         if(!user){

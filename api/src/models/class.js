@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             type: DataTypes.STRING,
         },
-        video: {
+        fileId: {
             allowNull: false,
             type: DataTypes.STRING,
         },
@@ -50,7 +50,9 @@ module.exports = (sequelize, DataTypes) => {
 
     Class.associate = (models) => {
         Class.belongsTo(models.Company, { foreignKey: 'companyId' })
-        Class.belongsTo(models.Course, { foreignKey: 'courseId' })
+        Class.belongsTo(models.Module, { foreignKey: 'moduleId' })
+        Class.hasOne(models.Class, { foreignKey: 'fileId' })
+        Class.belongsToMany(models.User, { through: 'UserClass', foreignKey: "classId" })
     }
 
     return Class;

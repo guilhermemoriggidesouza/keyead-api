@@ -13,9 +13,13 @@ module.exports = {
             allowNull: false,
             type: DataTypes.STRING,
         },
-        video: {
+        fileId: {
             allowNull: false,
             type: DataTypes.STRING,
+            references: {
+                key: "fileId",
+                model: "File",
+            },
         },
         description: {
             allowNull: false,

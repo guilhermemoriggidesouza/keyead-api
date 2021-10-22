@@ -13,15 +13,14 @@ describe("[controller] tests class controller", ()=> {
             header: (_) => "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJHdWlsaGVybWUiLCJzb2NpYWxSZWFzb24iOiJNb3JpZ2dpIiwiY25waiI6IjUzMTQxNTIyODIwIiwidGVsZWZvbmUiOiIxOTk4NDU0ODg4OSIsImVtYWlsIjoiR3VpbGhlcm1lTW9yaWdnaUBTb3V6YS5jb20iLCJwYXNzd29yZCI6Ijc0NjU3Mzc0NjUzMTMyMzMiLCJjYXRlZ29yeSI6IkEiLCJjb21wYW55SWQiOjEsImlhdCI6MTYyNjUzNzg3MH0.YcWutrb4zESE2kl1wJ0L2rtMyGMLkib64Tnu2gDZuHo",
             user: mock.USER,
             body: { 
-                classId: 1,
-                name: "TESTE",
-                description: "TESTE",
-                video: "video.mp4",
-                duration: 200,
-                moduleId: 1,
-                companyId: 1,
-                createdAt: "2021-08-11 21:28:00.000",
-                updateAt: "2021-08-11 21:28:00.000"
+                "name": "TESTE",
+                "description": "TESTE",
+                "video": "video.mp4",
+                "duration": 200,
+                "moduleId": 1,
+                "companyId": 1,
+                "createdAt": "2021-08-11 21:28:00.000",
+                "updateAt": "2021-08-11 21:28:00.000"
             }
         }
 

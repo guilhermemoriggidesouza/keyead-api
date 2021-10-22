@@ -1,15 +1,87 @@
 const classRepository = require("../../repository/class")
-const categoryRepository = require("../../repository/category")
+const userClassRepository = require("../../repository/user-class")
+const userCourseRepository = require("../../repository/user-course")
+const fileService = require("../../service/file")
+
+const startClassVideo = async (req, res) => {
+    try {
+        const { classId } = req.params
+        const { companyId, userId } = req.user
+
+        const class_ = await classRepository.getOne({ classId, companyId })
+        const course = await userCourseRepository.getOne({
+            courseId: class_.courseId,
+            companyId,
+            userId
+        })
+
+        if(!course){
+            res.status(400).send({error:"Usuário não associado ao curso"})
+        }
+        const createdUserClassAssociation = await userClassRepository.create({
+            userId,
+            companyId,
+            classId,
+            isFinished: false
+        })
+
+        res.status(200).send(createdUserClassAssociation)
+
+    } catch (error) {
+        res.status(500).json(error)
+        console.log("[controller] error on streaming Class", error, req.body)
+    }
+}
+
+const finishClassVideo = async (req, res) => {
+    try {
+        const { classId } = req.params
+        const { companyId, userId } = req.user
+
+        const userClass = await userClassRepository.getOne({ 
+            where: { 
+                classId, 
+                companyId,
+                userId
+            }
+        })
+        if(!userClass){
+            res.status(400).send({error:"Usuário não associado a aula"})
+        }
+
+        const updatedClassUser = await userClassRepository.update({isFinished: false}, {
+            where: {
+                userId,
+                companyId,
+                classId,
+            }
+        })
+
+        res.status(200).send({ success: true, updated: updatedClassUser[0] })
+
+    } catch (error) {
+        res.status(500).json(error)
+        console.log("[controller] error on streaming Class", error, req.body)
+    }
+}
 
 const createClassHandler = async (req, res) => {
     try{
-        const { name, description, video, duration, moduleId, } = req.body
-        const { companyId } = req.user
+        const { name, description, video, duration, moduleId, courseId } = req.body
+        const { companyId, userId } = req.user
+
+        const createdVideo = await fileService.insertFile({ 
+            name: `${name.replace(/ /g, "").replace(/./g, "").replace(/;/g, "").replace(/,/g, "")}-video`, 
+            description: `video para aula: ${name.replace(/ /g, "").replace(/./g, "").replace(/;/g, "").replace(/,/g, "")}`, 
+            companyId, 
+            userId,
+            buffer: Buffer.from(video.indexOf(",") != -1 ? video.split(",")[1] : video , "base64") 
+        })
 
         const createdClass = await classRepository.create({
             name,
             description,
-            video,
+            fileId: createdVideo.fileId,
             duration,
             moduleId,
             companyId
@@ -83,7 +155,7 @@ const getClassHandler = async (req, res) =>{
         }
 
         if(req.params.classId) where.classId = req.params.classId
-        const classes = await classRepository.getAll({
+        let classes = await classRepository.getAll({
             limit: where.classId ? 1 : undefined,
             where,
         })
@@ -92,6 +164,9 @@ const getClassHandler = async (req, res) =>{
             res.status(400).json([])
             return
         }
+        
+        classes = await Promise.all(classes.map(async class_ => await fileService.parseKeyToUrl(class_)))
+
         res.status(200).json({ success: true, data: classes })
     } catch (error) {
         res.status(500).json(error)
@@ -104,4 +179,6 @@ module.exports = {
     deleteClassHandler,
     getClassHandler,
     updateClassHandler,
+    startClassVideo,
+    finishClassVideo
 }
